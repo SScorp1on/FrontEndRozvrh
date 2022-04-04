@@ -1,1 +1,17 @@
-<p>predmet-formular works!</p>
+<h1>Predmety - formular</h1>
+
+<form [formGroup]="formular">
+
+  <label>Nazov:
+    <input formControlName="name" type="text" >
+  </label>
+  <br><br>
+
+  <br> <br>
+
+  <button class="button" type="submit" [disabled]="formular.invalid"   >pridaj</button>
+  <button  class="button" type="submit" [disabled]="formular.invalid" (click)="uprav()" >uprav</button>
+  <button  class="button" type="submit" (click)="zrus()" >zrus</button>
+
+</form>
+

@@ -1,1 +1,22 @@
-<p>predmet-zoznam works!</p>
+<h1>Predmety</h1>
+
+<div>
+  <label for="new-predmet">Nazov predmetu: </label>
+  <input id="new-predmet" #NazovPredmetu />
+
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button type="button" class="add-button" (click)="addPredmet(NazovPredmetu.value); NazovPredmetu.value=''">
+    Pridať predmet
+  </button>
+</div>
+
+<ul class="predmety">
+  <li *ngFor="let predmet of predmety">
+    <a routerLink="/detail/{{predmet.id}}">
+      <span class="badge">{{predmet.id}}</span> {{predmet.name}}
+    </a>
+    <button type="button" class="delete" title="delete predmet"
+            (click)="delete(predmet)">x</button>
+  </li>
+</ul>
+

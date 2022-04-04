@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
+import { FormControl, FormGroup } from "@angular/forms"
+ enum MENU { PREDMETY, UCITELIA }
 
 @Component({
   selector: 'app-root',
@@ -7,4 +10,19 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'FrontEndRozvrh';
+
+  menu = MENU
+  constructor(private router: Router) {
+  }
+
+
+
+  otvorMenu(m: MENU){
+    if (m == MENU.PREDMETY) {
+      this.router.navigate(['predmety']);
+    }
+    if (m == MENU.UCITELIA) {
+      this.router.navigate(['ucitelia']);
+    }
+  }
 }

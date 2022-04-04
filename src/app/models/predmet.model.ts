@@ -1,5 +1,5 @@
-export class PredmetModel {
-  id?: number;
-  // nazov: string;
-  // potrebujePocitac: boolean;
+export interface Predmet {
+  id: number
+  name: string
+
 }

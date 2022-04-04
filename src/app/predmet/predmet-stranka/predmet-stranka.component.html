@@ -1,1 +1,16 @@
-<p>predmet-stranka works!</p>
+<h1 class=" d-flex justify-content-center ">Predmety</h1>
+<app-predmet-formular [predmety]="predmetNaUpravu"
+                        (pridajPredmet)="pridaj($event)"
+                        (upravPredmet)="uprav($event)" >
+</app-predmet-formular>
+
+<app-predmet-zoznam>
+</app-predmet-zoznam>
+
+<br>
+
+<div>
+  <button (click)="chodSpat()">SPÄŤ</button>
+</div>
+
+

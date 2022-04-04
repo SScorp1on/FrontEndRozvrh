@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './in-memory-data.service';
 import { AppComponent } from './app.component';
 import { PredmetFormularComponent } from './predmet/predmet-formular/predmet-formular.component';
 import { PredmetStrankaComponent } from './predmet/predmet-stranka/predmet-stranka.component';
@@ -12,7 +13,12 @@ import { MiestnostFormularComponent } from './miestnost/miestnost-formular/miest
 import { MiestnostStrankaComponent } from './miestnost/miestnost-stranka/miestnost-stranka.component';
 import { MiestnostZoznamComponent } from './miestnost/miestnost-zoznam/miestnost-zoznam.component';
 import { MenuComponent } from './menu/menu.component';
-
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RouterModule} from "@angular/router";
+import {AppRoutingModule} from "./app-routing.module";
+import {HttpClientModule} from "@angular/common/http";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MessagesComponent } from './messages/messages.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,10 +31,23 @@ import { MenuComponent } from './menu/menu.component';
     MiestnostFormularComponent,
     MiestnostStrankaComponent,
     MiestnostZoznamComponent,
-    MenuComponent
+    MenuComponent,
+    MessagesComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    RouterModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgbModule,
+    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+    // and returns simulated server responses.
+    // Remove it when a real server is ready to receive requests.
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]
