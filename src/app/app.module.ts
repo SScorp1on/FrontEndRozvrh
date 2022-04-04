@@ -19,6 +19,8 @@ import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MessagesComponent } from './messages/messages.component';
+import { ButtonModule } from "primeng/button";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +43,7 @@ import { MessagesComponent } from './messages/messages.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ButtonModule,
     NgbModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.

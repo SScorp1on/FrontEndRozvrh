@@ -11,7 +11,7 @@ const routes: Routes = [
     component: PredmetStrankaComponent
   },
   {
-    path: 'učitelia',
+    path: 'ucitelia',
     component: UcitelStrankaComponent
   }
 

@@ -5,7 +5,7 @@
   <input id="new-predmet" #NazovPredmetu />
 
   <!-- (click) passes input value to add() and then clears the input -->
-  <button type="button" class="add-button" (click)="addPredmet(NazovPredmetu.value); NazovPredmetu.value=''">
+  <button pButton  (click)="addPredmet(NazovPredmetu.value); NazovPredmetu.value=''">
     Pridať predmet
   </button>
 </div>

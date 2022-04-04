@@ -1,5 +1,6 @@
-export class Ucitel{
-
-  constructor(public meno: string, public priezvisko: string, public kontakt: string) {
-  }
+export interface Ucitel{
+  id: number
+  firstName: string
+  lastName: string
+  contact: string
 }
