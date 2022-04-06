@@ -1,0 +1,15 @@
+<app-header></app-header>
+<nav>
+  <mat-grid-list cols="2" rowHeight="1:1">
+    <mat-grid-tile><button mat-button type="button" routerLink="/predmety" >Zoznam predmetov</button></mat-grid-tile>
+    <mat-grid-tile><button mat-button type="button" (click)="otvorMenu(menu.UCITELIA)">Zoznam Učiteľov</button></mat-grid-tile>
+  </mat-grid-list>
+
+
+</nav>
+
+<div>
+  <button mat-button (click)="chodSpat()">SPÄŤ</button>
+</div>
+
+<router-outlet></router-outlet>

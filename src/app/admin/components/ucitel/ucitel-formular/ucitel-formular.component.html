@@ -1,0 +1,13 @@
+<div>
+  <label for="new-firstName">Meno: </label>
+  <input id="new-firstName" #firstName />
+  <label for="new-lastName">Priezvisko: </label>
+  <input id="new-lastName" #lastName />
+  <label for="new-contact">Email: </label>
+  <input id="new-contact" #contact />
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button type="button" class="add-button" (click)="addTeacher(firstName.value,lastName.value,contact.value); firstName.value='';lastName.value='';contact.value='';">
+    Pridať predmet
+  </button>
+
+</div>

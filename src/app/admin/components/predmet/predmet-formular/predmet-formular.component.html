@@ -1,0 +1,17 @@
+<div>
+  <label for="new-predmet">Nazov predmetu: </label>
+  <input id="new-predmet" #NazovPredmetu />
+  <label >Typ predmetu: </label>
+  <mat-form-field  appearance="fill">
+    <mat-select [(ngModel)]="selectedType" name="typPredmetu">
+      <mat-option  [value]="option.value" *ngFor="let option of typPredmetu" >{{option.value}}</mat-option>
+    </mat-select>
+  </mat-form-field><div>
+  <mat-checkbox id="new-computerRequired" [(ngModel)]="checked">Potrebuje Počitač </mat-checkbox>
+</div>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button type="button" class="add-button" (click)="addPredmet(NazovPredmetu.value,checked.valueOf(),selectedType.valueOf()); NazovPredmetu.value='';">
+    Pridať predmet
+  </button>
+
+</div>

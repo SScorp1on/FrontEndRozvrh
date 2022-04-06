@@ -1,19 +1,19 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {PredmetStrankaComponent} from "./predmet/predmet-stranka/predmet-stranka.component";
-import {UcitelStrankaComponent} from "./ucitel/ucitel-stranka/ucitel-stranka.component";
-import {AppComponent} from "./app.component";
+import {AuthGuard} from "./guards/auth.guard";
+import {LoginComponent} from "./login/login.component";
 
 const routes: Routes = [
-
   {
-    path: 'predmety',
-    component: PredmetStrankaComponent
+    path: 'login', component: LoginComponent
   },
   {
-    path: 'ucitelia',
-    component: UcitelStrankaComponent
-  }
+    path: '', redirectTo: '/login', pathMatch: 'full'
+  },
+  {
+    path: 'admin',canActivate:[AuthGuard], canDeactivate:[AuthGuard],
+    loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule)
+  },
 
 ];
 

@@ -1,0 +1,18 @@
+<div *ngIf="teacher">
+  <h2>{{teacher.firstName | uppercase}} {{teacher.lastName | uppercase}} Details</h2>
+  <div><span>id: </span>{{teacher.id}}</div>
+  <div>
+    <label for="firstName">Meno: </label>
+    <input id="firstName" [(ngModel)]="teacher.firstName" placeholder="firstName"/>
+  </div>
+  <div>
+    <label for="lastName">Priezvisko: </label>
+    <input id="lastName" [(ngModel)]="teacher.lastName" placeholder="lastName"/>
+  </div>
+  <div>
+    <label for="contact">Contact: </label>
+    <input id="contact" [(ngModel)]="teacher.contact" placeholder="contact"/>
+  </div>
+  <button type="button" (click)="goBack()">Vrátiť sa</button>
+  <button type="button" (click)="save()">Uložiť </button>
+</div>

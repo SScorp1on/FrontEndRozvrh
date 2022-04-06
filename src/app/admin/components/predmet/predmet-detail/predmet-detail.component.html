@@ -1,0 +1,18 @@
+<div *ngIf="predmet">
+  <h2>{{predmet.name | uppercase}} Details</h2>
+  <div><span>id: </span>{{predmet.id}}</div>
+  <div>
+    <label for="NazovPredmetu">Nazov predmetu: </label>
+    <input id="NazovPredmetu" [(ngModel)]="predmet.name" placeholder="Nazov predmetu"/>
+  </div>
+  <div>
+    <label for="typPredmetu">Typ predmetu: </label>
+    <input id="typPredmetu" [(ngModel)]="predmet.type" placeholder="Typ predmetu"/>
+  </div>
+  <div>
+    <label for="computerRequired">Potrebuje Počitač </label>
+    <mat-checkbox id="computerRequired" [(ngModel)]="predmet.computerRequired"></mat-checkbox>
+  </div>
+  <button type="button" (click)="goBack()">Vrátiť sa</button>
+  <button type="button" (click)="save()">Uložiť </button>
+</div>
