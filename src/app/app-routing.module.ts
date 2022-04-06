@@ -1,19 +1,23 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {AuthGuard} from "./guards/auth.guard";
-import {LoginComponent} from "./login/login.component";
+import {HomeComponent} from "./home/home.component";
+import {PredmetStrankaComponent} from "./predmet/predmet-stranka/predmet-stranka.component";
+import {PredmetDetailComponent} from "./predmet/predmet-detail/predmet-detail.component";
+import {UcitelStrankaComponent} from "./ucitel/ucitel-stranka/ucitel-stranka.component";
+import {UcitelDetailComponent} from "./ucitel/ucitel-detail/ucitel-detail.component";
+
 
 const routes: Routes = [
+
   {
-    path: 'login', component: LoginComponent
+    path: '', redirectTo: '/home', pathMatch: 'full'
   },
-  {
-    path: '', redirectTo: '/login', pathMatch: 'full'
-  },
-  {
-    path: 'admin',canActivate:[AuthGuard], canDeactivate:[AuthGuard],
-    loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule)
-  },
+    {path: 'home', component: HomeComponent},
+    {path: 'predmety', component: PredmetStrankaComponent},
+    {path: 'detail/predmety/:id', component: PredmetDetailComponent},
+    {path: 'teachers', component: UcitelStrankaComponent},
+    {path: 'detail/teachers/:id', component: UcitelDetailComponent},
+
 
 ];
 
