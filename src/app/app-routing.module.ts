@@ -5,6 +5,7 @@ import {PredmetStrankaComponent} from "./predmet/predmet-stranka/predmet-stranka
 import {PredmetDetailComponent} from "./predmet/predmet-detail/predmet-detail.component";
 import {UcitelStrankaComponent} from "./ucitel/ucitel-stranka/ucitel-stranka.component";
 import {UcitelDetailComponent} from "./ucitel/ucitel-detail/ucitel-detail.component";
+import {PredmetFormularComponent} from "./predmet/predmet-formular/predmet-formular.component";
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   },
     {path: 'home', component: HomeComponent},
     {path: 'predmety', component: PredmetStrankaComponent},
+    {path: 'predmety-formular', component: PredmetFormularComponent},
     {path: 'detail/predmety/:id', component: PredmetDetailComponent},
     {path: 'teachers', component: UcitelStrankaComponent},
     {path: 'detail/teachers/:id', component: UcitelDetailComponent},

@@ -81,7 +81,6 @@ export class PredmetService {
       return of(result as T);
     };
   }
-  /** Log a HeroService message with the MessageService */
   private log(message: string) {
     this.messageService.add(`PredmetService: ${message}`);
   }

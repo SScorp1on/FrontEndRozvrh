@@ -1,4 +1,4 @@
-<div *ngIf="predmet">
+<!--<div *ngIf="predmet">
   <h2>{{predmet.name | uppercase}} Details</h2>
   <div><span>id: </span>{{predmet.id}}</div>
   <div>
@@ -11,8 +11,42 @@
   </div>
   <div>
     <label for="computerRequired">Potrebuje Počitač </label>
-    <mat-checkbox id="computerRequired" [(ngModel)]="predmet.computerRequired"></mat-checkbox>
+    <mat-checkbox value="before" id="computerRequired" [(ngModel)]="predmet.computerRequired"></mat-checkbox>
   </div>
   <button type="button" (click)="goBack()">Vrátiť sa</button>
   <button type="button" (click)="save()">Uložiť </button>
+</div>
+-->
+<div class="form-container" *ngIf="predmet">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title><h2> {{predmet.name}} </h2></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-12">
+          <mat-form-field class="full-width">
+            <mat-label id="nazovPredmetu">Nazov predmetu:</mat-label>
+            <input  required matInput [(ngModel)]="predmet.name" placeholder="Nazov predmetu" >
+            <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-12">
+          <mat-form-field class="full-width">
+            <mat-select id="typPredmetu" [(ngModel)]="predmet.type" name="typPredmetu">
+              <mat-option  [value]="option.value" *ngFor="let option of typPredmetu" >{{option.value}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <mat-slide-toggle id="new-computerRequired" [(ngModel)]="predmet.computerRequired" labelPosition="before">Potrebuje Počitač </mat-slide-toggle>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-stroked-button (click)="save()">
+        Uložiť
+      </button>
+      <button mat-stroked-button routerLink="/predmety" (click)="goBack()">Vrátiť sa</button>
+    </mat-card-actions>
+  </mat-card>
 </div>

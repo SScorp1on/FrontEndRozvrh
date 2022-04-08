@@ -1,40 +1,100 @@
-<h1 class=" d-flex justify-content-center ">Zoznam predmetov</h1>
+<app-header></app-header>
 
 
+<!--<h1 class=" d-flex justify-content-center ">Zoznam predmetov</h1>
 <ul class="predmety">
   <li *ngFor="let predmet of predmety">
     <a routerLink="/detail/predmety/{{predmet.id}}">
       <span class="badge">{{predmet.id}}</span> {{predmet.name}}
-     <!-- {{predmet.type}}<mat-checkbox [(ngModel)]="predmet.computerRequired"></mat-checkbox> -->
+      {{predmet.type}}<mat-checkbox [(ngModel)]="predmet.computerRequired"></mat-checkbox>
     </a>
 
     <button type="button" class="delete" title="delete predmet"
             (click)="delete(predmet)">x</button>
   </li>
 </ul>
- <table mat-table [dataSource]="predmety" class="mat-elevation-z8 demo-table" >
-   <ng-container matColumnDef="id">
-     <th mat-header-cell *matHeaderCellDef>ID</th>
-     <td mat-cell *matCellDef="let element"> {{element.id}}</td>
-   </ng-container>
-   <ng-container matColumnDef="name">
-     <th mat-header-cell *matHeaderCellDef>Name</th>
-     <td mat-cell *matCellDef="let element">{{element.name}}</td>
-   </ng-container>
-   <ng-container matColumnDef="type">
-     <th mat-header-cell *matHeaderCellDef>Typ</th>
-     <td mat-cell *matCellDef="let element">{{element.type}}</td>
-   </ng-container>
-   <ng-container matColumnDef="computerRequired">
-     <th mat-header-cell *matHeaderCellDef>Potrebuje počitač </th>
-     <td mat-cell *matCellDef="let element" >{{element.computerRequired}}</td>
-   </ng-container>
-   <ng-container matColumnDef="EDIT">
-     <th mat-header-cell ><button>EDIT</button></th>
-     <td mat-cell ><button>DELETE</button></td>
-   </ng-container>
-   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-   <tr mat-row (click)="clickedRow.add(row)" *matRowDef="let row; columns: columnsToDisplay"></tr>
+-->
+<div class="button-container">
+  <button mat-raised-button  class="button" routerLink="/predmety-formular">
+    Pridanie predmetu
+  </button>
+  <button mat-raised-button  class="button" (click)="back()">
+    SPÄŤ
+  </button>
+</div>
+<table mat-table [dataSource]="predmety" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
 
- </table>
+    <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="id" > No. </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="name"> Nazov Predmetu </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="type" > Typ </th>
+    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="computerRequired" >
+    <th mat-header-cell *matHeaderCellDef> Potrebuje počitač </th>
+    <td mat-cell *matCellDef="let element"> <mat-checkbox  [checked]="element.computerRequired"></mat-checkbox> </td>
+
+  </ng-container>
+  <ng-container matColumnDef="EDIT">
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let element"><button mat-button routerLink="/detail/predmety/{{element.id}}">Zmeniť</button></td>
+  </ng-container >
+  <ng-container  matColumnDef="DELETE" >
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td  mat-cell *matCellDef="let element"> <button class="buttonDelete" mat-button (click)="delete(element)" >Odstrániť </button> </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+
+
+<!--
+
+<div class="demo-button-container">
+  <button mat-raised-button  class="demo-button">
+    Add data
+  </button>
+</div>
+<table class="mat-table cdk-table mat-elevation-z8 demo-table">
+  <tr  class="mat-header-row cdk-header-row">
+  <th  scope="col" >ID</th>
+  <th scope="col" sortable="name" >Name</th>
+  <th scope="col" sortable="area" >Typ</th>
+  <th scope="col" sortable="population" >Potrebuje počitač</th>
+  </tr>
+  <tr class="mat-header-row cdk-header-row" *ngFor="let predmet of predmety ">
+    <td>{{predmet.id}}</td>
+    <td>{{predmet.name}}</td>
+    <td>{{predmet.type}}</td>
+    <td><mat-checkbox [checked]="checked" ></mat-checkbox></td>
+    <td><a routerLink="/detail/predmety/{{predmet.id}}">EDIT</a></td>
+    <td><a (click)="delete(predmet)" class="delete">DELETE</a></td>
+  </tr>
+</table>
+<div>
+  <h3>
+    Click Log
+  </h3>
+</div>
+
+<div *ngIf="!clickedRows.size">
+  Clicked rows will be logged here
+</div>
+
+<ul>
+  <li *ngFor="let clickedRow of clickedRows">
+    Clicked on {{clickedRow.id}}
+  </li>
+</ul>
 <app-messages></app-messages>
+-->

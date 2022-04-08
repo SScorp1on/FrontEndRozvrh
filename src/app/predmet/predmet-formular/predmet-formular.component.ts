@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {Predmet} from "../../models/predmet.model";
 import {PredmetService} from "../../services/predmet.service";
-import {FormBuilder} from "@angular/forms";
+import { FormControl, Validators} from "@angular/forms";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-predmet-formular',
@@ -10,15 +11,25 @@ import {FormBuilder} from "@angular/forms";
 })
 export class PredmetFormularComponent {
 
+  name = new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]/)])
 
-  constructor(private service: PredmetService,
-              private formular: FormBuilder) {
-    this.formular
+  openSnackBar() {
+    this._snackBar.open('Predmet bol pridan do zoznamu', 'OK',{ duration: 3000});
   }
+
+  constructor(private service: PredmetService, private _snackBar: MatSnackBar) {
+  }
+  getErrorMessage() {
+    if (this.name.hasError('required')) {
+      return 'Musíte zadať hodnotu';
+    }
+    return this.name.hasError('name') ? 'Not a valid email' : '';
+  }
+
   checked = false;
   typPredmetu = [] = [{value: 'Povinny'}, {value: 'Vyberovy'}, {value: 'Povinne-vyberovy'}]
 
-  selectedType = this.typPredmetu[1].value;
+  selectedType = this.typPredmetu[0].value;
   predmety: Predmet[] = []
 
   addPredmet(name: string,computerRequired: boolean,type: string): void {
@@ -29,3 +40,4 @@ export class PredmetFormularComponent {
     })
   }
 }
+
