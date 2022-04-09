@@ -3,5 +3,4 @@ export interface Ucitel{
   firstName: string
   lastName: string
   contact: string
-
 }

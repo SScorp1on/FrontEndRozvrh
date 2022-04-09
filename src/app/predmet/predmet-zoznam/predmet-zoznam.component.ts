@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Predmet} from "../../models/predmet.model";
 import {PredmetService} from "../../services/predmet.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {Sort} from "@angular/material/sort";
 import {Router} from "@angular/router";
+import {Dialog} from "primeng/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
@@ -15,12 +17,11 @@ function compare(a: number | string, b: number | string, isAsc: boolean) {
 })
 export class PredmetZoznamComponent implements OnInit {
 
-
   predmety: Predmet[] = []
-  displayedColumns: string[] = ['id', 'name', 'type', 'computerRequired', 'EDIT', 'DELETE']
+  displayedColumns: string[] = ['id', 'name', 'type', 'computersRequired', 'EDIT', 'DELETE']
   dataSource = new MatTableDataSource(this.predmety);
 
-  constructor(private service: PredmetService,private router: Router) {
+  constructor(private service: PredmetService,private router: Router, public dialog: MatDialog) {
     this.predmety = this.predmety.slice();
     this.service.getPredmety().subscribe(x => {
       this.predmety = x
@@ -28,7 +29,8 @@ export class PredmetZoznamComponent implements OnInit {
     })
   }
 
-isComputer!: string
+
+
   ngOnInit(): void {
     this.getPredmety()
   }
@@ -37,11 +39,12 @@ isComputer!: string
     this.service.getPredmety().subscribe(predmety => this.predmety = predmety)
   }
 
-
   delete(predmet: Predmet): void {
     this.predmety = this.predmety.filter(p => p !== predmet)
     this.service.deletePredmet(predmet.id).subscribe()
   }
+
+
 
   sortData(sort: Sort) {
     const data = this.predmety.slice();
@@ -66,6 +69,30 @@ isComputer!: string
   back(){
     this.router.navigate(['/home']);
   }
+  openDialog(element:any) {
+    const dialogRef = this.dialog.open(DialogPredmetConfirmationComponent, {
+      width: '250px'
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.delete(element)
+      }
+    });
+  }
 }
 
+@Component({
+  selector: 'dialog-predmet-confirmation.component',
+  templateUrl: 'dialog-predmet-confirmation.component.html',
+})
+export class DialogPredmetConfirmationComponent {
+  constructor(
+  public dialogRef: MatDialogRef<DialogPredmetConfirmationComponent>,
+  @Inject(MAT_DIALOG_DATA) public data: Predmet,
+) {}
 
+  onNoClick(): void{
+    this.dialogRef.close()
+  }
+
+}

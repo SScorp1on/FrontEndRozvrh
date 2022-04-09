@@ -10,10 +10,14 @@ import {MessageService } from "./message.service";
 })
 
 export class UcitelService {
-  private  teachersurl = "http://localhost:8082/api/teachers";
+  private  teachersurl = "http://localhost:8082/api/ucitelia";
 
   httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
+    headers: new HttpHeaders({'Content-Type': 'application/json',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Methods':'GET',
+      'Access-Control-Allow-Origin': '*'
+    })
   }
   constructor(private http: HttpClient,
               private messageService: MessageService) { }

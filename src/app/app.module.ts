@@ -7,11 +7,11 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from "@angular/platform-browser";
 import {PredmetDetailComponent} from "./predmet/predmet-detail/predmet-detail.component";
 import {PredmetFormularComponent} from "./predmet/predmet-formular/predmet-formular.component";
-import {PredmetZoznamComponent} from "./predmet/predmet-zoznam/predmet-zoznam.component";
+import {DialogPredmetConfirmationComponent, PredmetZoznamComponent} from "./predmet/predmet-zoznam/predmet-zoznam.component";
 import {PredmetStrankaComponent} from "./predmet/predmet-stranka/predmet-stranka.component";
 import {UcitelFormularComponent} from "./ucitel/ucitel-formular/ucitel-formular.component";
 import {UcitelStrankaComponent} from "./ucitel/ucitel-stranka/ucitel-stranka.component";
-import {UcitelZoznamComponent} from "./ucitel/ucitel-zoznam/ucitel-zoznam.component";
+import {DialogUcitelConfirmationComponent, UcitelZoznamComponent} from "./ucitel/ucitel-zoznam/ucitel-zoznam.component";
 import {UcitelDetailComponent} from "./ucitel/ucitel-detail/ucitel-detail.component";
 import {HeaderComponent} from "./header/header.component";
 import {MessagesComponent} from "./messages/messages.component";
@@ -35,6 +35,14 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatCardModule} from "@angular/material/card";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import { FooterComponent } from './footer/footer.component';
+import { RozvrhComponent } from './rozvrh/rozvrh.component';
+import {DialogMiestnostConfirmationComponent, MiestnostZoznamComponent} from "./miestnost/miestnost-zoznam/miestnost-zoznam.component";
+import {MiestnostStrankaComponent} from "./miestnost/miestnost-stranka/miestnost-stranka.component";
+import {MiestnostFormularComponent} from "./miestnost/miestnost-formular/miestnost-formular.component";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MiestnostDetailComponent} from "./miestnost/miestnost-detail/miestnost-detail.component";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +57,15 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
     UcitelDetailComponent,
     MessagesComponent,
     HomeComponent,
+    FooterComponent,
+    RozvrhComponent,
+    MiestnostZoznamComponent,
+    MiestnostStrankaComponent,
+    MiestnostFormularComponent,
+    MiestnostDetailComponent,
+    DialogPredmetConfirmationComponent,
+    DialogUcitelConfirmationComponent,
+    DialogMiestnostConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -60,9 +77,9 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataPredmetyService, {dataEncapsulation: false}
-    ),
+   // HttpClientInMemoryWebApiModule.forRoot(
+   //   InMemoryDataPredmetyService, {dataEncapsulation: false}
+    // ),
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -79,7 +96,8 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
     MatSnackBarModule,
     MatTooltipModule,
     MatCardModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

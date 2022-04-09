@@ -28,6 +28,9 @@
           <mat-form-field class="full-width">
             <mat-label id="nazovPredmetu">Nazov predmetu:</mat-label>
             <input  required matInput [(ngModel)]="predmet.name" placeholder="Nazov predmetu" >
+            <button *ngIf="predmet.name" matSuffix mat-icon-button aria-label="Clear" (click)="predmet.name=('')" >
+              <mat-icon>close</mat-icon>
+            </button>
             <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error>
           </mat-form-field>
         </div>
@@ -40,13 +43,13 @@
         </div>
       </div>
 
-      <mat-slide-toggle id="new-computerRequired" [(ngModel)]="predmet.computerRequired" labelPosition="before">Potrebuje Počitač </mat-slide-toggle>
+      <mat-slide-toggle id="new-computerRequired" [(ngModel)]="predmet.computersRequired" labelPosition="before">Potrebuje Počitač </mat-slide-toggle>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-stroked-button (click)="save()">
+      <button class="action-button" mat-stroked-button (click)="save()">
         Uložiť
       </button>
-      <button mat-stroked-button routerLink="/predmety" (click)="goBack()">Vrátiť sa</button>
+      <button class="action-button" mat-stroked-button routerLink="/predmety" (click)="goBack()">Vrátiť sa</button>
     </mat-card-actions>
   </mat-card>
 </div>

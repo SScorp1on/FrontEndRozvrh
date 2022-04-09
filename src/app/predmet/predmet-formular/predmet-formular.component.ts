@@ -12,11 +12,10 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class PredmetFormularComponent {
 
   name = new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]/)])
-
+  value = ''
   openSnackBar() {
     this._snackBar.open('Predmet bol pridan do zoznamu', 'OK',{ duration: 3000});
   }
-
   constructor(private service: PredmetService, private _snackBar: MatSnackBar) {
   }
   getErrorMessage() {
@@ -32,10 +31,10 @@ export class PredmetFormularComponent {
   selectedType = this.typPredmetu[0].value;
   predmety: Predmet[] = []
 
-  addPredmet(name: string,computerRequired: boolean,type: string): void {
+  addPredmet(name: string,computersRequired: boolean,type: string): void {
     name = name.trim();
     if(!name){return}
-    this.service.addPredmet({name,computerRequired,type} as Predmet).subscribe(predmet => {
+    this.service.addPredmet({name,computersRequired,type} as Predmet).subscribe(predmet => {
       this.predmety.push(predmet)
     })
   }

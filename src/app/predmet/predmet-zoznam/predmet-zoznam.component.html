@@ -1,19 +1,5 @@
 <app-header></app-header>
 
-
-<!--<h1 class=" d-flex justify-content-center ">Zoznam predmetov</h1>
-<ul class="predmety">
-  <li *ngFor="let predmet of predmety">
-    <a routerLink="/detail/predmety/{{predmet.id}}">
-      <span class="badge">{{predmet.id}}</span> {{predmet.name}}
-      {{predmet.type}}<mat-checkbox [(ngModel)]="predmet.computerRequired"></mat-checkbox>
-    </a>
-
-    <button type="button" class="delete" title="delete predmet"
-            (click)="delete(predmet)">x</button>
-  </li>
-</ul>
--->
 <div class="button-container">
   <button mat-raised-button  class="button" routerLink="/predmety-formular">
     Pridanie predmetu
@@ -39,9 +25,9 @@
     <td mat-cell *matCellDef="let element"> {{element.type}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="computerRequired" >
+  <ng-container matColumnDef="computersRequired" >
     <th mat-header-cell *matHeaderCellDef> Potrebuje počitač </th>
-    <td mat-cell *matCellDef="let element"> <mat-checkbox  [checked]="element.computerRequired"></mat-checkbox> </td>
+    <td mat-cell *matCellDef="let element"><mat-icon *ngIf="element.computersRequired; else elseBlock" >check</mat-icon><ng-template #elseBlock><mat-icon>do_disturb</mat-icon></ng-template>  </td>
 
   </ng-container>
   <ng-container matColumnDef="EDIT">
@@ -50,51 +36,9 @@
   </ng-container >
   <ng-container  matColumnDef="DELETE" >
     <th mat-header-cell *matHeaderCellDef> </th>
-    <td  mat-cell *matCellDef="let element"> <button class="buttonDelete" mat-button (click)="delete(element)" >Odstrániť </button> </td>
+    <td  mat-cell *matCellDef="let element"> <button class="buttonDelete" mat-button (click)="openDialog(element)"  >Odstrániť </button> </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-
-
-<!--
-
-<div class="demo-button-container">
-  <button mat-raised-button  class="demo-button">
-    Add data
-  </button>
-</div>
-<table class="mat-table cdk-table mat-elevation-z8 demo-table">
-  <tr  class="mat-header-row cdk-header-row">
-  <th  scope="col" >ID</th>
-  <th scope="col" sortable="name" >Name</th>
-  <th scope="col" sortable="area" >Typ</th>
-  <th scope="col" sortable="population" >Potrebuje počitač</th>
-  </tr>
-  <tr class="mat-header-row cdk-header-row" *ngFor="let predmet of predmety ">
-    <td>{{predmet.id}}</td>
-    <td>{{predmet.name}}</td>
-    <td>{{predmet.type}}</td>
-    <td><mat-checkbox [checked]="checked" ></mat-checkbox></td>
-    <td><a routerLink="/detail/predmety/{{predmet.id}}">EDIT</a></td>
-    <td><a (click)="delete(predmet)" class="delete">DELETE</a></td>
-  </tr>
-</table>
-<div>
-  <h3>
-    Click Log
-  </h3>
-</div>
-
-<div *ngIf="!clickedRows.size">
-  Clicked rows will be logged here
-</div>
-
-<ul>
-  <li *ngFor="let clickedRow of clickedRows">
-    Clicked on {{clickedRow.id}}
-  </li>
-</ul>
-<app-messages></app-messages>
--->

@@ -1,3 +1,19 @@
+.header {
+  width: 100%;
+}
+
 .example-spacer {
   flex: 1 1 auto;
 }
+
+.gradient-custom {
+  background: #6a11cb;
+  background: -webkit-linear-gradient(to right, rgb(106, 17, 203), rgb(37, 117, 252));
+  background: linear-gradient(to right, rgb(106, 17, 203), rgb(37, 117, 252));
+}
+
+h1 {
+  margin-left: 5px;
+}
+
+/*# sourceMappingURL=header.component.css.map */
