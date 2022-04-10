@@ -1,0 +1,62 @@
+
+<div class="main">
+<div class="form-container" *ngIf="teacher">
+  <form [formGroup]="formular" >
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title><h2> {{teacher.firstName}} {{teacher.lastName}} </h2></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="full-width">
+              <mat-label id="firstName">Meno:</mat-label>
+              <input formControlName="fname" [(ngModel)]="teacher.firstName" required matInput id="new-firstName">
+              <button *ngIf="teacher.firstName" matSuffix mat-icon-button aria-label="Clear" (click)="teacher.firstName=('')" >
+                <mat-icon>close</mat-icon>
+              </button>
+              <mat-error *ngIf="formular.get('fname')?.hasError('required')">
+                Meno je <strong>povinne</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-12">
+            <mat-form-field class="full-width">
+              <mat-label id="lastName">Priezvisko:</mat-label>
+              <input formControlName="lname" [(ngModel)]="teacher.lastName" required matInput id="new-lastName" >
+              <button *ngIf="teacher.lastName" matSuffix mat-icon-button aria-label="Clear" (click)="teacher.lastName=('')" >
+                <mat-icon>close</mat-icon>
+              </button>
+              <mat-error *ngIf="formular.get('lname')?.hasError('required')">
+                Priezvisko je <strong>povinne</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <mat-form-field class="full-width">
+            <mat-label id="contact">Contact:</mat-label>
+            <input type="email" [(ngModel)]="teacher.contact" [errorStateMatcher]="matcher"  placeholder="Priklad: pat@example.com" formControlName="cname" required matInput id="new-contact">
+            <button *ngIf="teacher.contact" matSuffix mat-icon-button aria-label="Clear" (click)="teacher.contact =('')" >
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-error *ngIf="formular.hasError('email') && !formular.hasError('required')">
+              Zadajte platnú e-mailovú adresu
+            </mat-error>
+            <mat-error *ngIf="formular.get('cname')?.hasError('required')">
+              E-mail je <strong>povinný</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button class="action-button" [disabled]="formular.invalid"  mat-stroked-button (click)="save()">
+          Uložiť
+        </button>
+        <button class="action-button" mat-stroked-button routerLink="/teachers">SPÄŤ</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,39 @@
+<app-header></app-header>
+
+<div class="form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title><h1>Formular</h1></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-12">
+          <mat-form-field class="full-width">
+            <mat-label id="nazovPredmetu">Nazov predmetu:</mat-label>
+            <input [(ngModel)]="value" [formControl]="name" required matInput id="new-predmet" #NazovPredmetu >
+            <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''" >
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-12">
+          <mat-form-field class="full-width">
+            <mat-select id="typPredmetu" [(ngModel)]="selectedType" name="typPredmetu">
+              <mat-option  [value]="option.value" *ngFor="let option of typPredmetu" >{{option.value}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <mat-slide-toggle id="new-computerRequired" [(ngModel)]="checked" labelPosition="before">Potrebuje Počitač </mat-slide-toggle>
+    </mat-card-content>
+    <mat-card-actions>
+      <button class="action-button" mat-stroked-button routerLink="/predmety"  [disabled]="name.invalid" (click)="addPredmet(NazovPredmetu.value,checked.valueOf(),selectedType.valueOf()); NazovPredmetu.value=''; openSnackBar()">
+        Pridať predmet
+      </button>
+      <button class="action-button" mat-stroked-button routerLink="/predmety">SPÄŤ</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

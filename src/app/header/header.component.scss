@@ -1,0 +1,23 @@
+.header{
+  width: 100%;
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.gradient-custom {
+  background: #6a11cb;
+  background: -webkit-linear-gradient(
+      to right,
+      rgba(106, 17, 203, 1),
+      rgba(37, 117, 252, 1)
+  );
+  background: linear-gradient(
+      to right,
+      rgba(106, 17, 203, 1),
+      rgba(37, 117, 252, 1)
+  );
+}
+h1{
+  margin-left: 5px;
+}
