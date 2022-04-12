@@ -15,7 +15,7 @@ export class MiestnostService{
   private  miestnostyurl = "http://localhost:8082/api/miestnosty";
 
   httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
+    headers: new HttpHeaders({'Content-Type': 'application/json','Access-Control-Allow-Origin': '*','Access-Control-Allow-Headers': 'Content-Type','Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT','mode': 'no-cors'})
   }
 
   constructor(private http: HttpClient,

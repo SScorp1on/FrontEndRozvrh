@@ -13,7 +13,11 @@ export class PredmetService {
   private  predmetyurl = "http://localhost:8082/api/predmety";
 
   httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json','Access-Control-Allow-Origin': '*','Access-Control-Allow-Headers': 'Content-Type','Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT'})
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'mode': 'no-cors'
+    })
   }
   constructor(private http: HttpClient,
               private messageService: MessageService) { }

@@ -1,32 +1,20 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {MatButtonToggleGroup} from "@angular/material/button-toggle";
+import {Dni} from "../models/dni.model";
+import {Rozvrh} from "../models/rozvrh.model";
+import {Miestnost} from "../models/miestnost.model";
 
 @Component({
   selector: 'app-rozvrh',
   templateUrl: './rozvrh.component.html',
   styleUrls: ['./rozvrh.component.css']
 })
-export class RozvrhComponent{
-  displayedColumns: string[] = [];
- // dataSource = ELEMENT_DATA;
+export class RozvrhComponent implements OnInit{
 
-  tables = [0];
 
-  constructor() {
-    this.displayedColumns.length = 24;
-    this.displayedColumns.fill('filler');
-
-    // The first two columns should be position and name; the last two columns: weight, symbol
-    this.displayedColumns[0] = 'position';
-    this.displayedColumns[1] = 'name';
-    this.displayedColumns[22] = 'weight';
-    this.displayedColumns[23] = 'symbol';
+ arrDni = [Dni.Pondelok,Dni.Utorok, Dni.Streda, Dni.stvrtok,Dni.Piatok]
+  ngOnInit(): void{
+    console.log(this.arrDni)
   }
 
-  /** Whether the button toggle group contains the id as an active value. */
- /* isSticky(buttonToggleGroup: MatButtonToggleGroup, id: string) {
-    return (buttonToggleGroup.value || []).indexOf(id) !== -1;
-  }
-}
-
-*/
 }

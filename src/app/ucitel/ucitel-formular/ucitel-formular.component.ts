@@ -31,7 +31,7 @@ export class UcitelFormularComponent implements OnInit{
   }
 
   openSnackBar() {
-    this._snackBar.open('Učitel bol pridan do zoznamu', 'OK',{ duration: 3000, horizontalPosition:'center',verticalPosition: 'top'});
+    this._snackBar.open('Učitel bol pridan do zoznamu', 'OK',{ duration: 3000, horizontalPosition:'center',verticalPosition: 'bottom'});
   }
   fvalue = ''
   lvalue = ''

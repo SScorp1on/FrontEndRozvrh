@@ -42,6 +42,7 @@ import {MiestnostStrankaComponent} from "./miestnost/miestnost-stranka/miestnost
 import {MiestnostFormularComponent} from "./miestnost/miestnost-formular/miestnost-formular.component";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MiestnostDetailComponent} from "./miestnost/miestnost-detail/miestnost-detail.component";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 @NgModule({
   declarations: [
@@ -67,38 +68,39 @@ import {MiestnostDetailComponent} from "./miestnost/miestnost-detail/miestnost-d
     DialogUcitelConfirmationComponent,
     DialogMiestnostConfirmationComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    NgbModule,
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-   // HttpClientInMemoryWebApiModule.forRoot(
-   //   InMemoryDataPredmetyService, {dataEncapsulation: false}
-    // ),
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatOptionModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatTableModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatGridListModule,
-    MatSortModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    MatTooltipModule,
-    MatCardModule,
-    MatSlideToggleModule,
-    MatPaginatorModule
-  ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        NgbModule,
+        // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+        // and returns simulated server responses.
+        // Remove it when a real server is ready to receive requests.
+        // HttpClientInMemoryWebApiModule.forRoot(
+        //   InMemoryDataPredmetyService, {dataEncapsulation: false}
+        // ),
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatOptionModule,
+        MatCheckboxModule,
+        MatSelectModule,
+        MatTableModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatGridListModule,
+        MatSortModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        MatTooltipModule,
+        MatCardModule,
+        MatSlideToggleModule,
+        MatPaginatorModule,
+        MatButtonToggleModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

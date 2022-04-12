@@ -36,6 +36,8 @@ export class MiestnostFormularComponent {
   addRoom(name: string,computersProviding: boolean,address: string): void {
     name = name.trim();
     if(!name){return}
+    address = address.trim();
+    if(!address){return}
     this.service.addRoom({name,computersProviding,address} as Miestnost).subscribe(miestnost => {
       this.Rooms.push(miestnost)
     })
