@@ -12,7 +12,7 @@ import {Miestnost} from "../models/miestnost.model";
 export class MiestnostService{
 
 
-  private  miestnostyurl = "http://localhost:8082/api/miestnosty";
+  private  miestnostyurl = "http://localhost:8082/api/ucebna";
 
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json','Access-Control-Allow-Origin': '*','Access-Control-Allow-Headers': 'Content-Type','Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT','mode': 'no-cors'})

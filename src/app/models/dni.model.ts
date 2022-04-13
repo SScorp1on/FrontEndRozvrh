@@ -1,1 +1,8 @@
-export const enum Dni{ Pondelok, Utorok, Streda, stvrtok, Piatok}
+export enum Dni{
+  Pondelok,
+  Utorok,
+  Streda,
+  Stvortok,
+  Piatok
+ }
+

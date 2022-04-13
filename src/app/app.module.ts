@@ -43,6 +43,8 @@ import {MiestnostFormularComponent} from "./miestnost/miestnost-formular/miestno
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MiestnostDetailComponent} from "./miestnost/miestnost-detail/miestnost-detail.component";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatTabsModule} from "@angular/material/tabs";
+import { RozvrhFormularComponent } from './rozvrh/rozvrh-formular/rozvrh-formular.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,8 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     MiestnostDetailComponent,
     DialogPredmetConfirmationComponent,
     DialogUcitelConfirmationComponent,
-    DialogMiestnostConfirmationComponent
+    DialogMiestnostConfirmationComponent,
+    RozvrhFormularComponent
   ],
     imports: [
         BrowserModule,
@@ -78,9 +81,9 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
         // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
         // and returns simulated server responses.
         // Remove it when a real server is ready to receive requests.
-        // HttpClientInMemoryWebApiModule.forRoot(
-        //   InMemoryDataPredmetyService, {dataEncapsulation: false}
-        // ),
+      //   HttpClientInMemoryWebApiModule.forRoot(
+           //     InMemoryDataPredmetyService, {dataEncapsulation: false}
+       //  ),
         BrowserAnimationsModule,
         MatFormFieldModule,
         MatInputModule,
@@ -99,7 +102,8 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
         MatCardModule,
         MatSlideToggleModule,
         MatPaginatorModule,
-        MatButtonToggleModule
+        MatButtonToggleModule,
+        MatTabsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

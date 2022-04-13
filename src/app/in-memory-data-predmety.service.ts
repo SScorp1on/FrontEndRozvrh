@@ -25,7 +25,7 @@ export class InMemoryDataPredmetyService implements InMemoryDbService {
     ]
     return{miestnosty}
 
-    /*
+/*
     const teachers = [
       {id: 1, firstName: 'asdasdasd', lastName: 'sdas', contact: 'sdas@gmail.com'},
       {id: 2, firstName: 'asdasdasd', lastName: 'sdas', contact: 'sdas@gmail.com'},
@@ -52,7 +52,7 @@ export class InMemoryDataPredmetyService implements InMemoryDbService {
     ]
     return{teachers}
 
-/*
+
     const predmety = [
       { id: 1, name: 'Multimedia', type: 'Vyberovy',computerRequired: true },
       { id: 2, name: 'Programovanie', type: 'Povinne-vyberovy',computerRequired: true },
@@ -80,14 +80,13 @@ export class InMemoryDataPredmetyService implements InMemoryDbService {
   genId(predmety: Predmet[]): number {
     return predmety.length > 0 ? Math.max(...predmety.map(predmet => predmet.id)) + 1 : 11;
   }
-*/
 
 /*
   genId(teachers: Ucitel[]): number {
     return teachers.length > 0 ? Math.max(...teachers.map(teacher => teacher.id)) + 1 : 11;
   }
-*/
 
+*/
 
 
 
@@ -95,6 +94,8 @@ export class InMemoryDataPredmetyService implements InMemoryDbService {
   genId(miestnosty: Miestnost[]): number {
     return miestnosty.length > 0 ? Math.max(...miestnosty.map(miestnost => miestnost.id)) + 1 : 11;
   }
+
+
 
 
 }
