@@ -1,10 +1,14 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Ucitel} from "../../models/ucitel.model";
 import {UcitelService} from "../../services/ucitel.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {Router} from "@angular/router";
-import {Sort} from "@angular/material/sort";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MatSort, Sort} from "@angular/material/sort";
+import { MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatPaginator} from "@angular/material/paginator";
+import {UcitelFormularComponent} from "../ucitel-formular/ucitel-formular.component";
+import {UcitelDetailComponent} from "../ucitel-detail/ucitel-detail.component";
+import {UcitelDeleteComponent} from "../ucitel-delete/ucitel-delete.component";
 
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {
@@ -16,14 +20,18 @@ function compare(a: number | string, b: number | string, isAsc: boolean) {
   styleUrls: ['./ucitel-zoznam.component.css']
 })
 export class UcitelZoznamComponent implements OnInit {
-
+  @ViewChild(MatPaginator,  {static: true}) paginator!: MatPaginator;
+  dataSourceTeachers: any;
+  isLoaded: boolean = true;
 
   teachers: Ucitel[] = []
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'contact', 'EDIT', 'DELETE']
   dataSource = new MatTableDataSource<Ucitel>(this.teachers);
 
 
-  constructor(private service: UcitelService,private router: Router,public dialog: MatDialog) {
+  constructor(private service: UcitelService,
+              private router: Router,
+              private dialog: MatDialog) {
     this.teachers = this.teachers.slice();
     this.service.getTeachers().subscribe(x => {
       this.teachers = x
@@ -31,11 +39,63 @@ export class UcitelZoznamComponent implements OnInit {
 
     })
   }
+  @ViewChild(MatSort,  {static: true}) sort!: MatSort;
 
+  private loadTeachers() {
+    this.isLoaded = true;
+    this.service.getTeachers().subscribe({
+      next:(data => {
+        this.teachers = data;
+        this.teachers.sort(function (obj1, obj2) {
+          // Descending: first id less than the previous
+          return obj2.id - obj1.id;
+        });
+        this.isLoaded = false;
+        this.dataSourceTeachers = new MatTableDataSource(this.teachers);
 
+        this.dataSourceTeachers.sort = this.sort;
+        this.dataSourceTeachers.paginator = this.paginator;
+      }),
+      error : err => {
+        alert(`Error ${err}!`);
+        this.isLoaded = false;
+      }
+    });
+  }
+  onCreate(){
+    this.service.initializeFormGroup()
+    const dialogConfig = new MatDialogConfig()
+    dialogConfig.disableClose = true
+    dialogConfig.autoFocus = true
+    dialogConfig.width= "30%"
+    const dialogRef = this.dialog.open(UcitelFormularComponent, dialogConfig)
 
+    dialogRef.afterClosed().subscribe(result=>{
+      this.loadTeachers()
+    })
+  }
+  teacher: Ucitel |  undefined;
+  id!: number;
+
+  onEdit(id: number, firstName: string, lastName: string, contact: string){
+    this.id = id
+    console.log(id)
+    const dialogConfig = new MatDialogConfig()
+    dialogConfig.disableClose = true
+    dialogConfig.autoFocus = true
+    dialogConfig.width = "30%"
+    const dialogRef = this.dialog.open(UcitelDetailComponent, {
+      data: {id: id, firstName: firstName, lastName: lastName, contact: contact}
+
+    })
+    dialogRef.afterClosed().subscribe(result =>{
+
+      this.loadTeachers()
+
+    })
+  }
   ngOnInit(): void {
-    this.getTeachers()
+    this.loadTeachers()
   }
 
   getTeachers(): void {
@@ -43,10 +103,7 @@ export class UcitelZoznamComponent implements OnInit {
   }
 
 
-  delete(teacher: Ucitel): void {
-    this.teachers = this.teachers.filter(t => t !== teacher)
-    this.service.deleteTeacher(teacher.id).subscribe()
-  }
+
 
   sortData(sort: Sort) {
     const data = this.teachers.slice();
@@ -71,33 +128,20 @@ export class UcitelZoznamComponent implements OnInit {
   back(){
     this.router.navigate(['/home']);
   }
-  openDialog(element:any) {
-    const dialogRef = this.dialog.open(DialogUcitelConfirmationComponent, {
+  onDelete(id: number) {
+    console.log(id)
+    const dialogRef = this.dialog.open(UcitelDeleteComponent, {
+      data: {id: id},
       width: '250px'
     })
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.delete(element)
-      }
+      this.loadTeachers()
     });
   }
 
 }
 
-@Component({
-  selector: 'dialog-ucitel-confirmation.component',
-  templateUrl: 'dialog-ucitel-confirmation.component.html',
-})
-export class DialogUcitelConfirmationComponent {
-  constructor(
-    public dialogRef: MatDialogRef<DialogUcitelConfirmationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Ucitel,
-  ) {}
 
-  onNoClick(): void{
-    this.dialogRef.close()
-  }
 
-}
 
 

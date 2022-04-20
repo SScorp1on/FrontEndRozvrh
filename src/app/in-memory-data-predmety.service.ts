@@ -3,6 +3,7 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 import {Predmet} from "./models/predmet.model";
 import {Ucitel} from "./models/ucitel.model";
 import {Miestnost} from "./models/miestnost.model";
+import {Rozvrh} from "./models/rozvrh.model";
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,11 @@ import {Miestnost} from "./models/miestnost.model";
 export class InMemoryDataPredmetyService implements InMemoryDbService {
   createDb() {
 
+    const rozvrhy = [
+      {id: 1, day: 'Pondelok',time: '7:30-8:30',lastName: 'Vagac',predmetName: 'Wete3', ucebnaName: 'F-123'}
+    ]
+    return {rozvrhy}
+    /*
     const miestnosty = [
       {id: 1, name: 'sadasd', computersProviding: true, address:'dasdasda'},
       {id: 2, name: 'sadasd', computersProviding: true, address:'dasdasda'},
@@ -24,7 +30,7 @@ export class InMemoryDataPredmetyService implements InMemoryDbService {
 
     ]
     return{miestnosty}
-
+*/
 /*
     const teachers = [
       {id: 1, firstName: 'asdasdasd', lastName: 'sdas', contact: 'sdas@gmail.com'},
@@ -90,10 +96,16 @@ export class InMemoryDataPredmetyService implements InMemoryDbService {
 
 
 
-
+/*
   genId(miestnosty: Miestnost[]): number {
     return miestnosty.length > 0 ? Math.max(...miestnosty.map(miestnost => miestnost.id)) + 1 : 11;
   }
+
+ */
+genId(rozvrhy: Rozvrh[]): number {
+  return rozvrhy.length > 0 ? Math.max(...rozvrhy.map(rozvrhy => rozvrhy.id)) + 1 : 11;
+}
+
 
 
 

@@ -1,3 +1,4 @@
+<!--
 <div class="example-container">
   <mat-form-field appearance="fill">
     <mat-label>Od</mat-label>
@@ -11,8 +12,27 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Nazov Predmeta</mat-label>
-      <mat-select [(ngModel)]="predmetySelect" name="predmety"> </mat-select>
+      <mat-select [(ngModel)]="predmety">
+        <mat-option>None</mat-option>
+        <ng-container *ngFor="let name of predmety">
+          <mat-option [value]="name.name">{{name.name}}</mat-option>
+        </ng-container>
+      </mat-select>
       <mat-option></mat-option>
     </mat-form-field>
 </div>
 </div>
+-->
+
+<form [formGroup]="rozvrhService.form" (submit)="onSubmit()" >
+
+<mat-form-field>
+  <mat-label>Den</mat-label>
+  <mat-select formControlName="day" >
+  <mat-option>None</mat-option>
+    <ng-container *ngFor="let dni of dni">
+      <mat-option>{{dni}}</mat-option>
+    </ng-container>
+  </mat-select>
+</mat-form-field>
+</form>

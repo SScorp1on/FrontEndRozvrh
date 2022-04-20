@@ -1,9 +1,10 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Ucitel} from "../models/ucitel.model";
-import {catchError,map, tap} from "rxjs";
+import {catchError, tap} from "rxjs";
 import { Observable, of } from 'rxjs';
 import {MessageService } from "./message.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Injectable({
   providedIn: `root`
@@ -22,7 +23,19 @@ export class UcitelService {
   }
   constructor(private http: HttpClient,
               private messageService: MessageService) { }
+  form: FormGroup = new FormGroup({
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('',Validators.required),
+    contact: new FormControl('',Validators.required)
+  })
 
+  initializeFormGroup(){
+    this.form.setValue({
+      firstName: '',
+      lastName: '',
+      contact: ''
+    })
+  }
 
   getTeachers(){
     return this.http.get<Ucitel[]>(this.teachersurl)
@@ -31,18 +44,7 @@ export class UcitelService {
         catchError(this.handleError<Ucitel[]>('getTeachers',[]))
       )
   }
-  getTeacherNo404<Data>(id: number): Observable<Ucitel>{
-    const url = `${this.teachersurl}/?id=${id}`
-    return this.http.get<Ucitel[]>(url)
-      .pipe(
-        map(teachers => teachers[0]),
-        tap(t => {
-          const outcome = t ? 'fetched' : 'did not find'
-          this.log(`${outcome} teacher id=${id}`)
-        }),
-        catchError(this.handleError<Ucitel>(`getTeachers id=${id}`))
-      )
-  }
+
 
   getTeacher(id: number): Observable<Ucitel>{
     const url = `${this.teachersurl}/${id}`;
@@ -66,8 +68,8 @@ export class UcitelService {
     );
   }
 
-  updateTeacher(teacher: Ucitel){
-    return this.http.put(this.teachersurl, teacher, this.httpOptions).pipe(
+  updateTeacher(id: number, teacher: Ucitel){
+    return this.http.put(`${this.teachersurl}/${id}`, teacher, this.httpOptions).pipe(
       tap(_ => this.log(`updated teacher id=${teacher.id}`)),
       catchError(this.handleError<any>('updateTeacher'))
     );

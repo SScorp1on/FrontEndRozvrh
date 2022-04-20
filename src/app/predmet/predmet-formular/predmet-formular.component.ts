@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
 import {Predmet} from "../../models/predmet.model";
 import {PredmetService} from "../../services/predmet.service";
-import { FormControl, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialogRef} from "@angular/material/dialog";
+import {NotificationService} from "../../services/notification.service";
 
 @Component({
   selector: 'app-predmet-formular',
@@ -11,32 +12,37 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class PredmetFormularComponent {
 
-  name = new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]/)])
+
+
+  constructor(public service: PredmetService,
+              private notificationService: NotificationService,
+              private _snackBar: MatSnackBar,
+              public dialogRef: MatDialogRef<PredmetFormularComponent>) {
+  }
+
+  type = [] = [{value: 'Povinny'}, {value: 'Vyberovy'}, {value: 'Povinne-vyberovy'}]
   value = ''
-  openSnackBar() {
-    this._snackBar.open('Predmet bol pridan do zoznamu', 'OK',{ duration: 3000});
-  }
-  constructor(private service: PredmetService, private _snackBar: MatSnackBar) {
-  }
-  getErrorMessage() {
-    if (this.name.hasError('required')) {
-      return 'Musíte zadať hodnotu';
-    }
-    return this.name.hasError('name') ? 'Not a valid email' : '';
-  }
-
-  checked = false;
-  typPredmetu = [] = [{value: 'Povinny'}, {value: 'Vyberovy'}, {value: 'Povinne-vyberovy'}]
-
-  selectedType = this.typPredmetu[0].value;
   predmety: Predmet[] = []
 
-  addPredmet(name: string,computersRequired: boolean,type: string): void {
-    name = name.trim();
-    if(!name){return}
-    this.service.addPredmet({name,computersRequired,type} as Predmet).subscribe(predmet => {
-      this.predmety.push(predmet)
-    })
+
+
+  onSubmit() {
+    if (this.service.form.valid) {
+        this.service.addPredmet(this.service.form.value as Predmet).subscribe(predmet =>{
+          this.predmety.push(predmet)
+        });
+      this.service.form.reset();
+      this.service.initializeFormGroup();
+      this.notificationService.success('Predmet bol pridan do zoznamu');
+      this.onClose();
+
+    }
+  }
+
+  onClose() {
+    this.service.form.reset();
+    this.service.initializeFormGroup();
+    this.dialogRef.close();
   }
 }
 

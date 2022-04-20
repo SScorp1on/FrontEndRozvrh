@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
-import {PredmetService} from "../../services/predmet.service";
+import { Component } from '@angular/core';
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {Predmet} from "../../models/predmet.model";
 import {MiestnostService} from "../../services/miestnost.service";
 import {Miestnost} from "../../models/miestnost.model";
+import {NotificationService} from "../../services/notification.service";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-miestnost-formular',
@@ -13,33 +12,33 @@ import {Miestnost} from "../../models/miestnost.model";
 })
 export class MiestnostFormularComponent {
 
-  name = new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]/)])
-  address = new FormControl('',[Validators.required])
   valueName = ''
   valueAddress= ''
-  openSnackBar() {
-    this._snackBar.open('Miestnosť bola pridana do zoznamu', 'OK',{ duration: 3000});
+
+  constructor(public service: MiestnostService,
+              private _snackBar: MatSnackBar,
+              private notificationService: NotificationService,
+              public dialogRef: MatDialogRef<MiestnostFormularComponent>) {
   }
-  constructor(private service: MiestnostService, private _snackBar: MatSnackBar) {
-  }
-  getErrorMessage() {
-    if (this.name.hasError('required')) {
-      return 'Musíte zadať hodnotu';
+
+
+  rooms: Miestnost[] = []
+
+  onSubmit() {
+    if (this.service.form.valid) {
+      this.service.addRoom(this.service.form.value as Miestnost).subscribe(room =>{
+        this.rooms.push(room)
+      });
+      this.service.form.reset();
+      this.service.initializeFormGroup();
+      this.notificationService.success('Učebňa bola pridana do zoznamu');
+      this.onClose();
+
     }
-    return this.name.hasError('adress')
   }
-
-  checked = false;
-
-  Rooms: Miestnost[] = []
-
-  addRoom(name: string,computersProviding: boolean,address: string): void {
-    name = name.trim();
-    if(!name){return}
-    address = address.trim();
-    if(!address){return}
-    this.service.addRoom({name,computersProviding,address} as Miestnost).subscribe(miestnost => {
-      this.Rooms.push(miestnost)
-    })
+  onClose() {
+    this.service.form.reset();
+    this.service.initializeFormGroup();
+    this.dialogRef.close();
   }
 }

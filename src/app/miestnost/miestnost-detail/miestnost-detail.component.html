@@ -1,40 +1,36 @@
-<div class="form-container" *ngIf="room">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title><h2> {{room.name}} </h2></mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
+<div class="form-container">
+  <form [formGroup]="form">
       <div class="row">
         <div class="col-md-12">
           <mat-form-field class="full-width">
-            <mat-label id="nazovPredmetu">Nazov predmetu:</mat-label>
-            <input  required matInput [(ngModel)]="room.name" placeholder="Nazov predmetu" >
-            <button *ngIf="room.name" matSuffix mat-icon-button aria-label="Clear" (click)="room.name=('')" >
+            <mat-label id="nazovPredmetu">Nazov Ucebne:</mat-label>
+            <input formControlName="name"  required matInput  placeholder="Nazov Ucebne" >
+            <button *ngIf="data.name" matSuffix mat-icon-button aria-label="Clear" (click)="data.name=('')" >
               <mat-icon>close</mat-icon>
             </button>
-            <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error>
+            <mat-error></mat-error>
           </mat-form-field>
         </div>
         <div class="col-md-12">
           <mat-form-field class="full-width">
-            <mat-label id="address">address:</mat-label>
-            <input [(ngModel)]="room.address" [formControl]="address" required matInput id="new-address" #nameAddress >
-            <button *ngIf="room.address" matSuffix mat-icon-button aria-label="Clear" (click)="room.address=''" >
+            <mat-label >address:</mat-label>
+            <input  formControlName="address" required matInput  >
+            <button *ngIf="data.address" matSuffix mat-icon-button aria-label="Clear" (click)="data.address=''" >
               <mat-icon>close</mat-icon>
             </button>
-            <mat-error *ngIf="address.invalid">{{getErrorMessage()}}</mat-error>
+            <mat-error ></mat-error>
           </mat-form-field>
         </div>
+        <mat-slide-toggle  formControlName="computersProviding" labelPosition="before">Obsahuje počitače </mat-slide-toggle>
       </div>
 
-      <mat-slide-toggle id="new-computersProviding" [(ngModel)]="room.computersProviding" labelPosition="before">Obsahuje počitače </mat-slide-toggle>
-    </mat-card-content>
+
     <mat-card-actions>
-      <button class="action-button" mat-stroked-button (click)="save()">
-        Uložiť
+      <button class="action-button" mat-stroked-button type="submit" [disabled]="form.invalid"  (click)="onSubmit()">
+        Pridat ucebňu
       </button>
-      <button class="action-button" mat-stroked-button routerLink="/miestnosty" (click)="goBack()">Vrátiť sa</button>
+      <button class="action-button" mat-stroked-button (click)="onClose()">Vrátiť sa</button>
     </mat-card-actions>
-  </mat-card>
+  </form>
 </div>
 

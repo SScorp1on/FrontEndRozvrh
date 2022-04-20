@@ -1,53 +1,66 @@
-import { Component, OnInit } from '@angular/core';
-import {Predmet} from "../../models/predmet.model";
-import {FormControl, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
-import {PredmetService} from "../../services/predmet.service";
-import {Location} from "@angular/common";
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Miestnost} from "../../models/miestnost.model";
 import {MiestnostService} from "../../services/miestnost.service";
+import {NotificationService} from "../../services/notification.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-miestnost-detail',
   templateUrl: './miestnost-detail.component.html',
-  styleUrls: ['./miestnost-detail.component.css']
+  styleUrls: ['./miestnost-detail.component.scss']
 })
 export class MiestnostDetailComponent implements OnInit {
 
-  room: Miestnost |  undefined;
+  rooms: Miestnost[] = []
+  value = ''
 
-  name = new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]/)])
-  address = new FormControl('',[Validators.required])
   constructor(
-    private route: ActivatedRoute,
-    private miestnostService: MiestnostService,
-    private location: Location
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private service: MiestnostService,
+    private notificationService: NotificationService,
+    private _snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<MiestnostDetailComponent>
   ) {}
-
-  getErrorMessage() {
-    if (this.name.hasError('required')) {
-      return 'Musíte zadať hodnotu';
-    }
-    return this.name.hasError('name') ? 'Not a valid email' : '';
-  }
   ngOnInit(): void {
-    this.getRoom();
+
   }
 
-  getRoom(): void {
-    const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-    this.miestnostService.getRoom(id)
-      .subscribe(room => this.room = room);
+  form: FormGroup = new FormGroup({
+    name: new FormControl(this.data.name, Validators.required),
+    address: new FormControl(this.data.address,Validators.required),
+    computersProviding: new FormControl(this.data.computersProviding)
+  })
+
+  initializeFormGroup(){
+    this.form.setValue({
+      name: this.data.name,
+      address: this.data.address,
+      computersProviding: this.data.computersProviding
+    })
+
   }
 
-  goBack(): void {
-    this.location.back();
+  onSubmit() {
+    console.log(this.data)
+    this.service.updateRoom(this.data.id , this.form.value).subscribe(predmet =>{
+      this.rooms.push(this.form.value)
+    });
+    this.form.reset();
+    this.initializeFormGroup();
+    this.notificationService.success('Ucebňa bola pridana do zoznamu');
+    this.onClose();
+
+  }
+  onClose():void {
+    this.form.reset();
+    this.initializeFormGroup();
+    this.dialogRef.close();
   }
 
-  save(): void {
-    if (this.room) {
-      this.miestnostService.updateRoom(this.room)
-        .subscribe(() => this.goBack());
-    }
-  }
+
+
+
+
 }

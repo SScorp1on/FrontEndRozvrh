@@ -1,8 +1,12 @@
-import {Predmet} from "./predmet.model";
-import {Miestnost} from "./miestnost.model";
-import {Ucitel} from "./ucitel.model";
-import {Dni} from "./dni.model";
 
-export interface Rozvrh {
 
+export interface Rozvrh{
+  id: number
+  predmetId: number
+  ucitelId: number
+  ucebnaId: number
+  den: string
+  start: string
+  finish: string
 }
+

@@ -1,11 +1,14 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import {Predmet} from "../../models/predmet.model";
 import {PredmetService} from "../../services/predmet.service";
-import {MatTableDataSource} from "@angular/material/table";
-import {Sort} from "@angular/material/sort";
-import {Router} from "@angular/router";
-import {Dialog} from "primeng/dialog";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import { MatTableDataSource} from "@angular/material/table";
+import {MatSort, Sort} from "@angular/material/sort";
+import {ActivatedRoute, Router} from "@angular/router";
+import { MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {PredmetFormularComponent} from "../predmet-formular/predmet-formular.component";
+import {MatPaginator} from "@angular/material/paginator";
+import {PredmetDetailComponent} from "../predmet-detail/predmet-detail.component";
+import {PredmetDeleteComponent} from "../predmet-delete/predmet-delete.component";
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
@@ -15,34 +18,89 @@ function compare(a: number | string, b: number | string, isAsc: boolean) {
   templateUrl: './predmet-zoznam.component.html',
   styleUrls: ['./predmet-zoznam.component.scss']
 })
-export class PredmetZoznamComponent implements OnInit {
+export class PredmetZoznamComponent implements OnInit{
+  @ViewChild(MatPaginator,  {static: true}) paginator!: MatPaginator;
+  dataSourcePredmety: any;
+  isLoaded: boolean = true;
 
   predmety: Predmet[] = []
+  dataSource = new MatTableDataSource<Predmet>(this.predmety)
   displayedColumns: string[] = ['id', 'name', 'type', 'computersRequired', 'EDIT', 'DELETE']
-  dataSource = new MatTableDataSource(this.predmety);
-
-  constructor(private service: PredmetService,private router: Router, public dialog: MatDialog) {
+  constructor(private service: PredmetService,
+              private router: Router,
+              private dialog: MatDialog
+             ) {
     this.predmety = this.predmety.slice();
     this.service.getPredmety().subscribe(x => {
       this.predmety = x
       console.log(this.predmety)
     })
   }
+  @ViewChild(MatSort,  {static: true}) sort!: MatSort;
 
+  private loadPredmety() {
+    this.isLoaded = true;
+    this.service.getPredmety().subscribe({
+      next:(data => {
+        this.predmety = data;
+        this.predmety.sort(function (obj1, obj2) {
+          // Descending: first id less than the previous
+          return obj2.id - obj1.id;
+        });
+        this.isLoaded = false;
+        this.dataSourcePredmety = new MatTableDataSource(this.predmety);
 
-
-  ngOnInit(): void {
-    this.getPredmety()
+        this.dataSourcePredmety.sort = this.sort;
+        this.dataSourcePredmety.paginator = this.paginator;
+      }),
+      error : err => {
+        alert(`Error ${err}!`);
+        this.isLoaded = false;
+      }
+    });
   }
 
+  onCreate(){
+    this.service.initializeFormGroup()
+  const dialogConfig = new MatDialogConfig()
+  dialogConfig.disableClose = true
+  dialogConfig.autoFocus = true
+  dialogConfig.width= "30%"
+ const dialogRef = this.dialog.open(PredmetFormularComponent, dialogConfig)
+
+    dialogRef.afterClosed().subscribe(result=>{
+      this.loadPredmety()
+    })
+}
+  predmet: Predmet |  undefined;
+      id!: number;
+
+    onEdit(id: number, name: string, type: string, computersRequired: boolean){
+      this.id = id
+      console.log(id)
+
+    const dialogConfig = new MatDialogConfig()
+   dialogConfig.disableClose = true
+   dialogConfig.autoFocus = true
+    dialogConfig.width = "30%"
+    const dialogRef = this.dialog.open(PredmetDetailComponent, {
+    data: {id: id, name: name, type: type, computersRequired: computersRequired}
+
+  })
+    dialogRef.afterClosed().subscribe(result =>{
+
+        this.loadPredmety()
+
+    })
+  }
+  ngOnInit(): void {
+    this.loadPredmety();
+  }
   getPredmety(): void {
     this.service.getPredmety().subscribe(predmety => this.predmety = predmety)
   }
 
-  delete(predmet: Predmet): void {
-    this.predmety = this.predmety.filter(p => p !== predmet)
-    this.service.deletePredmet(predmet.id).subscribe()
-  }
+
 
 
 
@@ -69,30 +127,16 @@ export class PredmetZoznamComponent implements OnInit {
   back(){
     this.router.navigate(['/home']);
   }
-  openDialog(element:any) {
-    const dialogRef = this.dialog.open(DialogPredmetConfirmationComponent, {
+  onDelete(id: number) {
+    console.log(id)
+    const dialogRef = this.dialog.open(PredmetDeleteComponent, {
+      data: {id: id},
       width: '250px'
     })
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.delete(element)
-      }
+      this.loadPredmety()
     });
   }
 }
 
-@Component({
-  selector: 'dialog-predmet-confirmation.component',
-  templateUrl: 'dialog-predmet-confirmation.component.html',
-})
-export class DialogPredmetConfirmationComponent {
-  constructor(
-  public dialogRef: MatDialogRef<DialogPredmetConfirmationComponent>,
-  @Inject(MAT_DIALOG_DATA) public data: Predmet,
-) {}
 
-  onNoClick(): void{
-    this.dialogRef.close()
-  }
-
-}

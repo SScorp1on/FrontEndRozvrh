@@ -7,11 +7,11 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from "@angular/platform-browser";
 import {PredmetDetailComponent} from "./predmet/predmet-detail/predmet-detail.component";
 import {PredmetFormularComponent} from "./predmet/predmet-formular/predmet-formular.component";
-import {DialogPredmetConfirmationComponent, PredmetZoznamComponent} from "./predmet/predmet-zoznam/predmet-zoznam.component";
+import {PredmetZoznamComponent} from "./predmet/predmet-zoznam/predmet-zoznam.component";
 import {PredmetStrankaComponent} from "./predmet/predmet-stranka/predmet-stranka.component";
 import {UcitelFormularComponent} from "./ucitel/ucitel-formular/ucitel-formular.component";
 import {UcitelStrankaComponent} from "./ucitel/ucitel-stranka/ucitel-stranka.component";
-import {DialogUcitelConfirmationComponent, UcitelZoznamComponent} from "./ucitel/ucitel-zoznam/ucitel-zoznam.component";
+import { UcitelZoznamComponent} from "./ucitel/ucitel-zoznam/ucitel-zoznam.component";
 import {UcitelDetailComponent} from "./ucitel/ucitel-detail/ucitel-detail.component";
 import {HeaderComponent} from "./header/header.component";
 import {MessagesComponent} from "./messages/messages.component";
@@ -37,7 +37,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import { FooterComponent } from './footer/footer.component';
 import { RozvrhComponent } from './rozvrh/rozvrh.component';
-import {DialogMiestnostConfirmationComponent, MiestnostZoznamComponent} from "./miestnost/miestnost-zoznam/miestnost-zoznam.component";
+import {MiestnostZoznamComponent} from "./miestnost/miestnost-zoznam/miestnost-zoznam.component";
 import {MiestnostStrankaComponent} from "./miestnost/miestnost-stranka/miestnost-stranka.component";
 import {MiestnostFormularComponent} from "./miestnost/miestnost-formular/miestnost-formular.component";
 import {MatPaginatorModule} from "@angular/material/paginator";
@@ -45,6 +45,13 @@ import {MiestnostDetailComponent} from "./miestnost/miestnost-detail/miestnost-d
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatTabsModule} from "@angular/material/tabs";
 import { RozvrhFormularComponent } from './rozvrh/rozvrh-formular/rozvrh-formular.component';
+import { RozvrhZoznamComponent } from './rozvrh/rozvrh-zoznam/rozvrh-zoznam.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { PredmetDeleteComponent } from './predmet/predmet-delete/predmet-delete.component';
+import { UcitelDeleteComponent } from './ucitel/ucitel-delete/ucitel-delete.component';
+import { MiestnostDeleteComponent } from './miestnost/miestnost-delete/miestnost-delete.component';
+import { RozvrhDetailComponent } from './rozvrh/rozvrh-detail/rozvrh-detail.component';
+import { RozvrhDeleteComponent } from './rozvrh/rozvrh-delete/rozvrh-delete.component';
 
 @NgModule({
   declarations: [
@@ -66,10 +73,13 @@ import { RozvrhFormularComponent } from './rozvrh/rozvrh-formular/rozvrh-formula
     MiestnostStrankaComponent,
     MiestnostFormularComponent,
     MiestnostDetailComponent,
-    DialogPredmetConfirmationComponent,
-    DialogUcitelConfirmationComponent,
-    DialogMiestnostConfirmationComponent,
-    RozvrhFormularComponent
+    RozvrhFormularComponent,
+    RozvrhZoznamComponent,
+    PredmetDeleteComponent,
+    UcitelDeleteComponent,
+    MiestnostDeleteComponent,
+    RozvrhDetailComponent,
+    RozvrhDeleteComponent
   ],
     imports: [
         BrowserModule,
@@ -81,9 +91,9 @@ import { RozvrhFormularComponent } from './rozvrh/rozvrh-formular/rozvrh-formula
         // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
         // and returns simulated server responses.
         // Remove it when a real server is ready to receive requests.
-      //   HttpClientInMemoryWebApiModule.forRoot(
-           //     InMemoryDataPredmetyService, {dataEncapsulation: false}
-       //  ),
+        // HttpClientInMemoryWebApiModule.forRoot(
+        //           InMemoryDataPredmetyService, {dataEncapsulation: false}
+        //),
         BrowserAnimationsModule,
         MatFormFieldModule,
         MatInputModule,
@@ -103,7 +113,8 @@ import { RozvrhFormularComponent } from './rozvrh/rozvrh-formular/rozvrh-formula
         MatSlideToggleModule,
         MatPaginatorModule,
         MatButtonToggleModule,
-        MatTabsModule
+        MatTabsModule,
+        MatProgressBarModule
     ],
   providers: [],
   bootstrap: [AppComponent]

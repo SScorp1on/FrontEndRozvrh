@@ -5,8 +5,8 @@ import {UcitelService} from "../../services/ucitel.service";
 import {MiestnostService} from "../../services/miestnost.service";
 import {Ucitel} from "../../models/ucitel.model";
 import {Miestnost} from "../../models/miestnost.model";
-import { async } from 'rxjs';
-import {FormGroup} from "@angular/forms";
+import {RozvrhService} from "../../services/rozvrh.service";
+import {Dni} from "../../models/dni.model";
 
 @Component({
   selector: 'app-rozvrh-formular',
@@ -15,12 +15,11 @@ import {FormGroup} from "@angular/forms";
 })
 export class RozvrhFormularComponent implements OnInit {
 
-  //formular: FormGroup
+  dni: Dni[] = []
   predmety: Predmet[] = []
   teachers: Ucitel[] = []
   rooms: Miestnost[] = []
-  predmetySelect: { fName: string; lName: string }[] =  []
-  constructor(private predmetService: PredmetService,private ucitelService: UcitelService,private miestnostService: MiestnostService) {
+  constructor(private predmetService: PredmetService,private ucitelService: UcitelService,private miestnostService: MiestnostService, public rozvrhService: RozvrhService) {
     this.predmety = this.predmety.slice();
     this.predmetService.getPredmety().subscribe(p => {
       this.predmety = p
@@ -38,43 +37,10 @@ export class RozvrhFormularComponent implements OnInit {
     })
 }
   ngOnInit(): void{
-    this.getFilteredPredmety()
-    this.getFilteredTeachers()
-    this.getFilteredRooms()
+  console.log(this.dni)
+  }
+  onSubmit(){
+
   }
 
-  async getFilteredPredmety() : Promise<void> {
-    const dataPromise: Promise<Predmet[]> = new Promise((resolve, reject) => {
-      this.predmetService.getPredmety().subscribe((p: Predmet[]) => {
-        resolve(p)
-      });
-    });
-    const data = await dataPromise;
-    const filtered: string[] = [];
-    for (const e of data) filtered.push(e.name);
-    console.log(filtered)
-  }
-  async getFilteredTeachers() : Promise<void> {
-    const dataPromise: Promise<Ucitel[]> = new Promise((resolve, reject) => {
-      this.ucitelService.getTeachers().subscribe((t: Ucitel[]) => {
-        resolve(t)
-      });
-    });
-    const data = await dataPromise;
-    const filtered: {fName: string, lName: string}[] = [];
-    for (const e of data) filtered.push({fName: e.lastName, lName: e.firstName});
-    this.predmetySelect = filtered
-    console.log(filtered)
-  }
-  async getFilteredRooms() : Promise<void> {
-    const dataPromise: Promise<Miestnost[]> = new Promise((resolve, reject) => {
-      this.miestnostService.getRooms().subscribe((t: Miestnost[]) => {
-        resolve(t)
-      });
-    });
-    const data = await dataPromise;
-    const filtered: string[] = [];
-    for (const e of data) filtered.push(e.name);
-    console.log(filtered)
-  }
 }

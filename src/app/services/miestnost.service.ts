@@ -4,6 +4,7 @@ import {catchError,map, tap} from "rxjs";
 import { Observable, of } from 'rxjs';
 import {MessageService } from "./message.service";
 import {Miestnost} from "../models/miestnost.model";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Injectable({
   providedIn: `root`
@@ -12,7 +13,7 @@ import {Miestnost} from "../models/miestnost.model";
 export class MiestnostService{
 
 
-  private  miestnostyurl = "http://localhost:8082/api/ucebna";
+  private  miestnostyurl = "http://localhost:8082/api/ucebne";
 
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json','Access-Control-Allow-Origin': '*','Access-Control-Allow-Headers': 'Content-Type','Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT','mode': 'no-cors'})
@@ -21,7 +22,18 @@ export class MiestnostService{
   constructor(private http: HttpClient,
               private messageService: MessageService) { }
 
-
+  form: FormGroup = new FormGroup({
+    name: new FormControl('', Validators.required),
+    address: new FormControl('',Validators.required),
+    computersProviding: new FormControl(false)
+  })
+  initializeFormGroup(){
+    this.form.setValue({
+      name: '',
+      address: '',
+      computersProviding :false
+    })
+  }
   getRooms(){
     return this.http.get<Miestnost[]>(this.miestnostyurl)
       .pipe(
@@ -64,8 +76,8 @@ export class MiestnostService{
     );
   }
 
-  updateRoom(miestnost: Miestnost){
-    return this.http.put(this.miestnostyurl, miestnost, this.httpOptions).pipe(
+  updateRoom(id: number, miestnost: Miestnost){
+    return this.http.put(`${this.miestnostyurl}/${id}`, miestnost, this.httpOptions).pipe(
       tap(_ => this.log(`updated miestnost id=${miestnost.id}`)),
       catchError(this.handleError<any>('updateMiestnost'))
     );

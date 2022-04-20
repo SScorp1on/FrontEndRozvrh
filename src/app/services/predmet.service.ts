@@ -1,9 +1,10 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Predmet} from "../models/predmet.model"
-import {catchError,map, tap} from "rxjs";
+import { catchError, tap} from "rxjs";
 import { Observable, of } from 'rxjs';
 import {MessageService } from "./message.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Injectable({
   providedIn: `root`
@@ -11,6 +12,7 @@ import {MessageService } from "./message.service";
 
 export class PredmetService {
   private  predmetyurl = "http://localhost:8082/api/predmety";
+
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -22,6 +24,19 @@ export class PredmetService {
   constructor(private http: HttpClient,
               private messageService: MessageService) { }
 
+    form: FormGroup = new FormGroup({
+    name: new FormControl('', Validators.required),
+    type: new FormControl(''),
+    computersRequired: new FormControl(false)
+  })
+
+  initializeFormGroup(){
+    this.form.setValue({
+      name: '',
+      type: '',
+      computersRequired: false
+    })
+  }
    getPredmety(){
     return this.http.get<Predmet[]>(this.predmetyurl)
       .pipe(
@@ -29,18 +44,7 @@ export class PredmetService {
         catchError(this.handleError<Predmet[]>('getPredmety',[]))
       )
   }
-  getPredmetNo404<Data>(id: number): Observable<Predmet>{
-    const url = `${this.predmetyurl}/?id=${id}`
-    return this.http.get<Predmet[]>(url)
-      .pipe(
-        map(predmety => predmety[0]),
-        tap(p => {
-          const outcome = p ? 'fetched' : 'did not find'
-          this.log(`${outcome} predmet id=${id}`)
-        }),
-        catchError(this.handleError<Predmet>(`getPredmet id=${id}`))
-      )
-  }
+
 
   getPredmet(id: number): Observable<Predmet>{
     const url = `${this.predmetyurl}/${id}`;
@@ -57,17 +61,16 @@ export class PredmetService {
   }
   deletePredmet(id: number): Observable<Predmet> {
     const url = `${this.predmetyurl}/${id}`;
-
     return this.http.delete<Predmet>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted predmet id=${id}`)),
       catchError(this.handleError<Predmet>('deletePredmet'))
     );
   }
 
-  updatePredmet(predmet: Predmet){
-    return this.http.put(this.predmetyurl, predmet, this.httpOptions).pipe(
-      tap(_ => this.log(`updated predmet id=${predmet.id}`)),
-      catchError(this.handleError<any>('updatePredmet'))
+  updatePredmet(id:number, predmet: Predmet){
+    return this.http.put(`${this.predmetyurl}/${id}`, predmet, this.httpOptions).pipe(
+      tap(_ =>(predmet: Predmet) => this.log(`updated predmet id=${predmet.id}`)),
+      catchError(this.handleError<Predmet>('updatePredmet'))
     );
   }
 
@@ -87,5 +90,6 @@ export class PredmetService {
   private log(message: string) {
     this.messageService.add(`PredmetService: ${message}`);
   }
+
 }
 

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Predmet} from "../../models/predmet.model";
-import {ActivatedRoute} from "@angular/router";
 import {PredmetService} from "../../services/predmet.service";
-import{ Location } from "@angular/common";
-import {FormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {NotificationService} from "../../services/notification.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-predmet-detail',
@@ -11,38 +12,52 @@ import {FormControl, Validators} from "@angular/forms";
   styleUrls: ['./predmet-detail.component.scss']
 })
 export class PredmetDetailComponent implements OnInit {
-  predmet: Predmet |  undefined;
-  typPredmetu = [] = [{value: 'Povinny'}, {value: 'Vyberovy'}, {value: 'Povinne-vyberovy'}]
-  name = new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]/)])
+  predmety: Predmet[] = []
+  value = ''
+  type = [] = [{value: 'Povinny'}, {value: 'Vyberovy'}, {value: 'Povinne-vyberovy'}]
+
   constructor(
-    private route: ActivatedRoute,
-    private predmetService: PredmetService,
-    private location: Location
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public service: PredmetService,
+    private notificationService: NotificationService,
+    private _snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<PredmetDetailComponent>
   ) {}
-  getErrorMessage() {
-    if (this.name.hasError('required')) {
-      return 'Musíte zadať hodnotu';
-    }
-    return this.name.hasError('name') ? 'Not a valid email' : '';
-  }
+
   ngOnInit(): void {
-    this.getPredmet();
+
+  console.log(this.data.type)
+  }
+  form: FormGroup = new FormGroup({
+    name: new FormControl(this.data.name, Validators.required),
+    type: new FormControl(this.data.type),
+    computersRequired: new FormControl(this.data.computersRequired)
+  })
+
+  initializeFormGroup(){
+       this.form.setValue({
+        name: this.data.name,
+        type: this.data.type,
+        computersRequired: this.data.computersRequired
+      })
+
+  }
+  onSubmit() {
+    console.log(this.data)
+      this.service.updatePredmet(this.data.id , this.form.value).subscribe(predmet =>{
+        this.predmety.push(this.form.value)
+      });
+      this.form.reset();
+      this.initializeFormGroup();
+      this.notificationService.success('Predmet bol pridan do zoznamu');
+      this.onClose();
+
   }
 
-  getPredmet(): void {
-    const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-    this.predmetService.getPredmet(id)
-      .subscribe(predmet => this.predmet = predmet);
+  onClose():void {
+    this.form.reset();
+    this.initializeFormGroup();
+    this.dialogRef.close();
   }
 
-  goBack(): void {
-    this.location.back();
-  }
-
-  save(): void {
-    if (this.predmet) {
-      this.predmetService.updatePredmet(this.predmet)
-        .subscribe(() => this.goBack());
-    }
-  }
 }

@@ -1,49 +1,57 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Ucitel} from "../../models/ucitel.model";
-import {ActivatedRoute} from "@angular/router";
-import {Location} from "@angular/common";
 import {UcitelService} from "../../services/ucitel.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {MyErrorStateMatcher} from "../ucitel-formular/ucitel-formular.component";
-
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {NotificationService} from "../../services/notification.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 @Component({
   selector: 'app-ucitel-detail',
   templateUrl: './ucitel-detail.component.html',
   styleUrls: ['./ucitel-detail.component.scss']
 })
 export class UcitelDetailComponent implements OnInit {
-  teacher: Ucitel |  undefined;
+  teachers: Ucitel[] = []
 
   constructor(
-    private route: ActivatedRoute,
-    private ucitelService: UcitelService,
-    private location: Location
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public service: UcitelService,
+    private notificationService: NotificationService,
+    private _snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<UcitelDetailComponent>
   ) {}
-  formular!: FormGroup
-  matcher = new MyErrorStateMatcher();
+
   ngOnInit(): void {
-    this.getTeacher();
-    this.formular = new FormGroup({
-      fname: new FormControl('',[Validators.required, Validators.pattern(/^[a-zA-Z]/)]),
-      lname: new FormControl('',[Validators.required, Validators.pattern(/^[a-zA-Z]/)]),
-      cname: new FormControl('',[Validators.required, Validators.email])
+
+  }
+  form: FormGroup = new FormGroup({
+    firstName: new FormControl(this.data.firstName, Validators.required),
+    lastName: new FormControl(this.data.lastName,Validators.required),
+    contact: new FormControl(this.data.contact,Validators.required)
+  })
+  initializeFormGroup(){
+    this.form.setValue({
+      firstName: this.data.firstName,
+      lastName: this.data.lastName,
+      contact: this.data.contact
     })
+
+  }
+  onSubmit() {
+    console.log(this.data)
+    this.service.updateTeacher(this.data.id , this.form.value).subscribe(predmet =>{
+      this.teachers.push(this.form.value)
+    });
+    this.form.reset();
+    this.initializeFormGroup();
+    this.notificationService.success('Predmet bol pridan do zoznamu');
+    this.onClose();
+
   }
 
-  getTeacher(): void {
-    const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-    this.ucitelService.getTeacher(id)
-      .subscribe(teacher => this.teacher = teacher);
-  }
-
-  goBack(): void {
-    this.location.back();
-  }
-
-  save(): void {
-    if (this.teacher) {
-      this.ucitelService.updateTeacher(this.teacher)
-        .subscribe(() => this.goBack());
-    }
+  onClose():void {
+    this.form.reset();
+    this.initializeFormGroup();
+    this.dialogRef.close();
   }
 }
