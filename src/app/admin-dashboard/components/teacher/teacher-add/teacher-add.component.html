@@ -1,0 +1,44 @@
+<div class="form-container">
+  <form [formGroup]="service.form" >
+    <div class="forms">
+      <div class="row">
+        <div class="col-md-12">
+          <mat-form-field class="full-width">
+            <mat-label id="firstName">Meno:</mat-label>
+            <input  formControlName="firstName" required matInput >
+            <mat-error>
+              Meno je <strong>povinne</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-12">
+          <mat-form-field class="full-width">
+            <mat-label >Priezvisko:</mat-label>
+            <input formControlName="lastName" required matInput >
+            <mat-error>
+              Priezvisko je <strong>povinne</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <mat-form-field class="full-width">
+          <mat-label id="contact">Contact:</mat-label>
+          <input type="email"  placeholder="Priklad: ex@example.com" formControlName="contact" required matInput >
+          <mat-error>
+            Zadajte platnú e-mailovú adresu
+          </mat-error>
+          <mat-error>
+            E-mail je <strong>povinný</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <mat-card-actions>
+      <button class="action-button" [disabled]="service.form.invalid"  mat-stroked-button (click)="onSubmit()">
+        Pridať Učiteľa
+      </button>
+      <button class="action-button" mat-stroked-button (click)="onClose()">SPÄŤ</button>
+    </mat-card-actions>
+  </form>
+</div>

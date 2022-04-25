@@ -1,23 +1,22 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {HomeComponent} from "./home/home.component";
-import {PredmetStrankaComponent} from "./predmet/predmet-stranka/predmet-stranka.component";
-import {UcitelStrankaComponent} from "./ucitel/ucitel-stranka/ucitel-stranka.component";
-import {MiestnostZoznamComponent} from "./miestnost/miestnost-zoznam/miestnost-zoznam.component";
 import {RozvrhZoznamComponent} from "./rozvrh/rozvrh-zoznam/rozvrh-zoznam.component";
+import {TeacherListComponent} from "./admin-dashboard/components/teacher/teacher-list/teacher-list.component";
+import {ClassroomListComponent} from "./admin-dashboard/components/classroom/classroom-list/classroom-list.component";
+import {SubjectListComponent} from "./admin-dashboard/components/subject/subject-list/subject-list.component";
+import {AdminDashboardComponent} from "./admin-dashboard/admin-dashboard.component";
 
 
 const routes: Routes = [
 
   {
-    path: '', redirectTo: '/home', pathMatch: 'full'
+    path: '', redirectTo: '/admin-dashboard', pathMatch: 'full'
   },
-    {path: 'home', component: HomeComponent},
-    {path: 'predmety', component: PredmetStrankaComponent},
-    {path: 'teachers', component: UcitelStrankaComponent},
-    {path: 'ucebny', component: MiestnostZoznamComponent},
-    {path: 'rozvrhy', component: RozvrhZoznamComponent},
-   // {path: 'detail/rozvrhy/:id', component: Roz},
+    {path: 'admin-dashboard', component: AdminDashboardComponent},
+    {path: 'subjects', component: SubjectListComponent},
+    {path: 'teachers', component: TeacherListComponent},
+    {path: 'classrooms', component: ClassroomListComponent},
+    {path: 'rozvrh', component: RozvrhZoznamComponent}
 ];
 
 @NgModule({

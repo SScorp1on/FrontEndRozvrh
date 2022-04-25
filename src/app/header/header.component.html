@@ -3,7 +3,22 @@
 
   <h1> Rozvrh</h1>
   <span class="example-spacer"></span>
-  <button mat-icon-button  class="example-icon" aria-label="Example icon-button with share icon">
-    <mat-icon matTooltip="Odhlásenie" >logout</mat-icon>
-  </button>
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>manage_accounts</mat-icon>
+        <mat-label>Edit profile</mat-label>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+      <mat-label>Settings</mat-label>
+      </button>
+      <button  mat-menu-item>
+        <mat-icon class=>logout</mat-icon>
+        <mat-label>Logout</mat-label>
+      </button>
+    </mat-menu>
+
 </mat-toolbar>

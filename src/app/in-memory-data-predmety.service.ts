@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import {Predmet} from "./models/predmet.model";
-import {Ucitel} from "./models/ucitel.model";
-import {Miestnost} from "./models/miestnost.model";
-import {Rozvrh} from "./models/rozvrh.model";
+import {Rozvrh} from "./admin-dashboard/components/models/rozvrh.model";
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +9,8 @@ export class InMemoryDataPredmetyService implements InMemoryDbService {
   createDb() {
 
     const rozvrhy = [
-      {id: 1, day: 'Pondelok',time: '7:30-8:30',lastName: 'Vagac',predmetName: 'Wete3', ucebnaName: 'F-123'}
+      {id: 1, day: 'Pondelok',time: '7:30-8:30',lastName: 'Vagač',predmetName: 'Wete3', ucebnaName: 'F-123'},
+      {id: 2, day: 'Utorok',time: '9:00-11:30',lastName: 'Vagač',predmetName: 'Programovanie 3', ucebnaName: 'F-125'}
     ]
     return {rozvrhy}
     /*

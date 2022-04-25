@@ -25,3 +25,17 @@
     </div>
   </mat-tab>
 </mat-tab-group>
+<table class="table border">
+  <thead>
+  <tr>
+    <th>Deň</th>
+    <th *ngFor="let element of rozvrhy">{{element.start}}-{{element.finish}}</th>
+  </tr>
+  </thead>
+  <tbody >
+  <tr class="border" *ngFor="let date">
+    <th>{{date.date}}</th>
+    <td *ngFor="let element of rozvrhy">{{element.subjectId}}{{element.teacherId}}</td>
+  </tr>
+  </tbody>
+</table>
