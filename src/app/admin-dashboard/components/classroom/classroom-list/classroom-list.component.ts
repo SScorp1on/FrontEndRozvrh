@@ -104,7 +104,10 @@ export class ClassroomListComponent implements OnInit,OnDestroy {
     this.service.getClassrooms().pipe(takeUntil(this.destroy$)).subscribe(classrooms => this.classrooms = classrooms)
   }
 
-
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceClassrooms.filter = filterValue.trim().toLowerCase();
+  }
   sortData(sort: Sort) {
     const data = this.classrooms.slice();
     if (!sort.active || sort.direction === '') {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {OAuthService} from "angular-oauth2-oidc";
 
 
 @Component({
@@ -6,8 +7,11 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent{
   title = 'FrontEndRozvrh';
 
+  constructor(auth: OAuthService) {
+    auth.loadDiscoveryDocumentAndLogin()
+  }
 
 }

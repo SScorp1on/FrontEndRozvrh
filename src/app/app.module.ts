@@ -1,14 +1,12 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from "@angular/platform-browser";
 import {HeaderComponent} from "./header/header.component";
 import {MessagesComponent} from "./admin-dashboard/components/messages/messages.component";
-import {HttpClientInMemoryWebApiModule} from "angular-in-memory-web-api";
-import {InMemoryDataPredmetyService} from "./in-memory-data-predmety.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
@@ -31,11 +29,7 @@ import { RozvrhComponent } from './rozvrh/rozvrh.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatTabsModule} from "@angular/material/tabs";
-import { RozvrhZoznamComponent } from './rozvrh/rozvrh-zoznam/rozvrh-zoznam.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
-import { RozvrhDetailComponent } from './rozvrh/rozvrh-detail/rozvrh-detail.component';
-import { RozvrhDeleteComponent } from './rozvrh/rozvrh-delete/rozvrh-delete.component';
-import { SingupComponent } from './auth/singup/singup.component';
 import { TeacherListComponent } from './admin-dashboard/components/teacher/teacher-list/teacher-list.component';
 import { TeacherAddComponent } from './admin-dashboard/components/teacher/teacher-add/teacher-add.component';
 import { TeacherDetailComponent } from './admin-dashboard/components/teacher/teacher-detail/teacher-detail.component';
@@ -50,8 +44,6 @@ import {SubjectListComponent} from "./admin-dashboard/components/subject/subject
 import {SubjectDetailComponent} from "./admin-dashboard/components/subject/subject-detail/subject-detail.component";
 import {SubjectDeleteComponent} from "./admin-dashboard/components/subject/subject-delete/subject-delete.component";
 import {BackButtonDirective} from "./admin-dashboard/components/back-button.directive";
-import {NavigationService} from "./admin-dashboard/components/services/navigation.service";
-import { RozvrhFormComponent } from './rozvrh/rozvrh-form/rozvrh-form.component';
 import {MatMenuModule} from "@angular/material/menu";
 import { TimeblockListComponent } from './admin-dashboard/components/timeblock/timeblock-list/timeblock-list.component';
 import { TimeblockAddComponent } from './admin-dashboard/components/timeblock/timeblock-add/timeblock-add.component';
@@ -61,6 +53,24 @@ import { GroupListComponent } from './admin-dashboard/components/group/group-lis
 import { GroupDetailComponent } from './admin-dashboard/components/group/group-detail/group-detail.component';
 import { GroupDeleteComponent } from './admin-dashboard/components/group/group-delete/group-delete.component';
 import { GroupAddComponent } from './admin-dashboard/components/group/group-add/group-add.component';
+import {NullValidationHandler, OAuthModule, OAuthService} from "angular-oauth2-oidc";
+import {AuthInterceptor} from "./auth/authInterceptor";
+import {authCodeFlowConfig} from "./auth/AuthConfig";
+import {KeycloakAngularModule} from "keycloak-angular";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {CustomDataTimePipe} from "./admin-dashboard/components/pipes/customDataTime.pipe";
+function init_app(oauthService: OAuthService) {
+  return () => configureWithNewConfigApi(oauthService);
+}
+
+function configureWithNewConfigApi(oauthService: OAuthService) {
+  oauthService.configure(authCodeFlowConfig);
+  oauthService.tokenValidationHandler = new NullValidationHandler();
+  oauthService.setupAutomaticSilentRefresh();
+  oauthService.events.subscribe(e => { });
+  return oauthService.loadDiscoveryDocumentAndTryLogin();
+
+}
 
 @NgModule({
   declarations: [
@@ -69,10 +79,6 @@ import { GroupAddComponent } from './admin-dashboard/components/group/group-add/
     MessagesComponent,
     FooterComponent,
     RozvrhComponent,
-    RozvrhZoznamComponent,
-    RozvrhDetailComponent,
-    RozvrhDeleteComponent,
-    SingupComponent,
     TeacherListComponent,
     TeacherAddComponent,
     TeacherDetailComponent,
@@ -87,7 +93,6 @@ import { GroupAddComponent } from './admin-dashboard/components/group/group-add/
     SubjectDetailComponent,
     SubjectDeleteComponent,
     BackButtonDirective,
-    RozvrhFormComponent,
     TimeblockListComponent,
     TimeblockAddComponent,
     TimeblockDetailComponent,
@@ -95,45 +100,56 @@ import { GroupAddComponent } from './admin-dashboard/components/group/group-add/
     GroupListComponent,
     GroupDetailComponent,
     GroupDeleteComponent,
-    GroupAddComponent
+    GroupAddComponent,
+    CustomDataTimePipe
+
   ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        NgbModule,
-        // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-        // and returns simulated server responses.
-        // Remove it when a real server is ready to receive requests.
-        // HttpClientInMemoryWebApiModule.forRoot(
-        //           InMemoryDataPredmetyService, {dataEncapsulation: false}
-        //),
-        BrowserAnimationsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatOptionModule,
-        MatCheckboxModule,
-        MatSelectModule,
-        MatTableModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatButtonModule,
-        MatGridListModule,
-        MatSortModule,
-        MatDialogModule,
-        MatSnackBarModule,
-        MatTooltipModule,
-        MatCardModule,
-        MatSlideToggleModule,
-        MatPaginatorModule,
-        MatButtonToggleModule,
-        MatTabsModule,
-        MatProgressBarModule,
-        MatMenuModule
-    ],
-  providers: [NavigationService],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgbModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatOptionModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatTableModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatGridListModule,
+    MatSortModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatTooltipModule,
+    MatCardModule,
+    MatSlideToggleModule,
+    MatPaginatorModule,
+    MatButtonToggleModule,
+    MatTabsModule,
+    MatProgressBarModule,
+    MatMenuModule,
+    KeycloakAngularModule,
+    OAuthModule.forRoot(),
+    MatProgressSpinnerModule
+  ],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: init_app,
+      multi: true,
+      deps: [OAuthService],
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

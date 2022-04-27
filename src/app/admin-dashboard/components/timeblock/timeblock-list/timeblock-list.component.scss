@@ -1,7 +1,6 @@
 table {
   width: 100%;
 }
-
 .button-container {
   padding-bottom: 16px;
   padding-top: 16px;
@@ -10,7 +9,6 @@ table {
 .button + .button {
   margin-left: 8px;
 }
-
 button {
   background-color: #eee;
   border: none;
@@ -18,25 +16,19 @@ button {
   cursor: pointer;
   color: black;
 }
-
 button:hover {
   background-color: black;
   color: white;
 }
-
 button:disabled {
   background-color: #eee;
   color: #aaa;
   cursor: auto;
 }
-
-.buttonDelete {
-  background-color: rgb(255, 0, 0);
+.buttonDelete{
+  background-color: rgba(255, 0, 0, 1);
 }
-
-.buttonDelete:hover {
-  background-color: rgb(207, 0, 0);
+.buttonDelete:hover{
+  background-color: rgba(207, 0, 0, 1);
   color: black;
 }
-
-/*# sourceMappingURL=rozvrh-zoznam.component.css.map */

@@ -16,4 +16,9 @@ h1 {
   margin-left: 5px;
 }
 
+.menu-button {
+  margin-right: 10px;
+  border: 1px solid red;
+}
+
 /*# sourceMappingURL=header.component.css.map */

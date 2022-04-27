@@ -21,7 +21,7 @@ export class SubjectAddComponent implements OnDestroy{
               public dialogRef: MatDialogRef<SubjectAddComponent>) {
   }
 
-  type = [] = [{value: 'Povinny'}, {value: 'Vyberovy'}, {value: 'Povinne-vyberovy'}]
+  type = [] = [{value: 'Povinny'}, {value: 'Vyberovy'}, {value: 'Povinne-voliteľny'}]
   value = ''
   subjects: SubjectModel[] = []
 

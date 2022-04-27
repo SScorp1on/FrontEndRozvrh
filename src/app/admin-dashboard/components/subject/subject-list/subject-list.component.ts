@@ -10,6 +10,7 @@ import {SubjectAddComponent} from "../subject-add/subject-add.component";
 import {SubjectModel} from "../../models/subject";
 import {SubjectService} from "../../services/subject.service";
 import { Subject, takeUntil} from "rxjs";
+import {OAuthService} from "angular-oauth2-oidc";
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
@@ -21,7 +22,7 @@ function compare(a: number | string, b: number | string, isAsc: boolean) {
   styleUrls: ['./subject-list.component.scss']
 })
 export class SubjectListComponent implements OnInit, OnDestroy {
-
+  isLoading = true;
   @ViewChild(MatPaginator,  {static: true}) paginator!: MatPaginator;
   dataSourceSubjects: any;
   isLoaded: boolean = true;
@@ -30,13 +31,18 @@ export class SubjectListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['id', 'name', 'type', 'computersRequired', 'EDIT', 'DELETE']
   constructor(private service: SubjectService,
               private router: Router,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private oauthService: OAuthService
   ) {
+    this.oauthService.loadDiscoveryDocument()
+    console.log()
     this.subjects = this.subjects.slice();
      this.service.getSubjects().pipe(takeUntil(this.destroy$)).subscribe(x => {
       this.subjects = x
+       this.isLoading = false
       console.log(this.subjects)
     })
+
   }
   @ViewChild(MatSort,  {static: true}) sort!: MatSort;
 
@@ -105,7 +111,10 @@ export class SubjectListComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 
-
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceSubjects.filter = filterValue.trim().toLowerCase();
+  }
 
 
   sortData(sort: Sort) {

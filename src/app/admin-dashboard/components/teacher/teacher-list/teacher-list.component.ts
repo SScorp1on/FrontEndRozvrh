@@ -100,7 +100,10 @@ export class TeacherListComponent implements OnInit, OnDestroy {
     this.service.getTeachers().pipe(takeUntil(this.destroy$)).subscribe(teachers => this.teachers = teachers)
   }
 
-
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceTeachers.filter = filterValue.trim().toLowerCase();
+  }
 
 
   sortData(sort: Sort) {

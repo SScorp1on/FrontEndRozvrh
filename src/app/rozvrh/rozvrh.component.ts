@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Rozvrh} from "../admin-dashboard/components/models/rozvrh.model";
-import {RozvrhService} from "../admin-dashboard/components/services/rozvrh.service";
-import {Router} from "@angular/router";
-import {MatDialog} from "@angular/material/dialog";
+import {Component} from '@angular/core';
+import {TimeblockModel} from "../admin-dashboard/components/models/timeblock.model";
+import {TimeblockService} from "../admin-dashboard/components/services/timeblock.service";
+
 
 
 @Component({
@@ -12,16 +11,18 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class RozvrhComponent {
 
-rozvrhy: Rozvrh[] = []
+timeblocks: TimeblockModel[] = []
 
-  constructor(private service: RozvrhService) {
-    this.rozvrhy = this.rozvrhy.slice();
-    this.service.getRozvrhy().subscribe(r => {
-      this.rozvrhy = r
-      console.log(this.rozvrhy)
+  constructor(private service: TimeblockService) {
+    this.timeblocks = this.timeblocks.slice();
+    this.service.getTimeblocks().subscribe(t => {
+      this.timeblocks = t
+      console.log(this.timeblocks)
     })
   }
+  filteredDays(){
 
+}
 
 
 }

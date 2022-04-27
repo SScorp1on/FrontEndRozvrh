@@ -16,7 +16,7 @@ export class SubjectDetailComponent implements OnInit, OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
   subjects: SubjectModel[] = []
   value = ''
-  type = [] = [{value: 'Povinny'}, {value: 'Vyberovy'}, {value: 'Povinne-vyberovy'}]
+  type = [] = [{value: 'Povinny'}, {value: 'Vyberovy'}, {value: 'Povinne-voliteľny'}]
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,

@@ -7,6 +7,10 @@
     SPÄŤ
   </button>
 </div>
+<mat-form-field appearance="standard">
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" #input>
+</mat-form-field>
 <table mat-table [dataSource]="dataSourceClassrooms" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
 
   <ng-container matColumnDef="id">
@@ -21,7 +25,7 @@
 
   <ng-container matColumnDef="computersProviding" >
     <th mat-header-cell *matHeaderCellDef> Obsahuje počitače </th>
-    <td mat-cell *matCellDef="let element"><mat-icon *ngIf="element.computersProviding; else elseBlock" >check</mat-icon><ng-template #elseBlock><mat-icon>do_disturb</mat-icon></ng-template>  </td>
+    <td mat-cell *matCellDef="let element"><mat-icon *ngIf="element.computersProviding; else elseBlock"  style="color: green" matTooltip="Obsahuje" matTooltipPosition="right">computer</mat-icon><ng-template #elseBlock><mat-icon  matTooltipPosition="right" matTooltip="Neobsahuje" color="warn" >computer</mat-icon></ng-template> </td>
 
   </ng-container>
   <ng-container matColumnDef="address">
@@ -38,6 +42,9 @@
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4">Žiadne údaje zodpovedajúce filtru "{{input.value}}"</td>
+  </tr>
 </table>
 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 

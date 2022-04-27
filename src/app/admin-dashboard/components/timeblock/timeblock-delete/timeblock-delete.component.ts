@@ -1,15 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {NotificationService} from "../../services/notification.service";
+import {TimeblockService} from "../../services/timeblock.service";
 
 @Component({
   selector: 'app-timeblock-delete',
   templateUrl: './timeblock-delete.component.html',
-  styleUrls: ['./timeblock-delete.component.css']
+  styleUrls: ['./timeblock-delete.component.scss']
 })
-export class TimeblockDeleteComponent implements OnInit {
+export class TimeblockDeleteComponent {
 
-  constructor() { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private notificationService: NotificationService,
+    public service: TimeblockService,
+    public dialogRef: MatDialogRef<TimeblockDeleteComponent>,
 
-  ngOnInit(): void {
+  ) {}
+
+  submitDelete(){
+    this.service.deleteTimeblock(this.data.id).subscribe()
+    this.notificationService.success('Rozvrh bol odstranen do zoznamu');
+    this.dialogRef.close()
+  }
+  onNoClick(): void{
+    this.dialogRef.close()
   }
 
 }
