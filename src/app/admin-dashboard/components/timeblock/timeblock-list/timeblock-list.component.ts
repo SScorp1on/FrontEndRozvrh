@@ -119,7 +119,7 @@ export class TimeblockListComponent implements OnInit {
       switch (sort.active) {
         case 'id':
           return compare(a.id, b.id, isAsc);
-        case 'den':
+        case 'day':
           return compare(a.day, b.day, isAsc);
 
         default:

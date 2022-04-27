@@ -2,12 +2,12 @@ import {SubjectModel} from "./subject";
 import {Teacher} from "./teacher";
 import {Classroom} from "./classroom";
 import {Time} from "@angular/common";
-import {Den} from "./dni.model";
+import {Day} from "./day.model";
 
 
-export interface Rozvrh{
+export interface TimeblockModel{
   id: number
-  den: Den,
+  day: Day,
   subjectId:number,
   teacherId: number,
   classroomId: number,
