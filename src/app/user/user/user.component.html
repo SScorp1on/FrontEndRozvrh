@@ -1,0 +1,58 @@
+<app-header></app-header>
+
+<ng-container *ngIf="timeblocks.length == 0; else elseBlock" >
+  <h1>Otvoř svoj prvy rozvrh</h1>
+  <button mat-button routerLink="timetable-add"> VYTVORIŤ ROZVRH </button>
+
+</ng-container>
+<ng-template #elseBlock>
+  <button mat-raised-button
+          class="example-add-tab-button">
+    Pridať nový rozvrh
+  </button>
+  <button mat-raised-button backButton  class="button-action" >
+    SPÄŤ
+  </button>
+  <mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+    <mat-tab *ngFor="let tabs of  timeblocks" >
+  <table class="table border">
+    <thead>
+    <tr>
+      <th>Deň</th>
+      <th *ngFor="let element of timeblocks">{{element.start}}-{{element.finish}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="border" *ngFor="let element of timeblocks">
+      <th  [ngSwitch]="element.day">
+        <ng-container *ngSwitchCase="1">Pondelok</ng-container>
+        <ng-container *ngSwitchCase="2">Utorok</ng-container>
+        <ng-container *ngSwitchCase="3">Streda</ng-container>
+        <ng-container *ngSwitchCase="4">Štvortok</ng-container>
+        <ng-container *ngSwitchCase="5">Piatok</ng-container>
+      </th>
+      <td *ngFor="let element of timeblocks">
+        <mat-card>
+          <mat-card-subtitle>
+            Predmet
+          </mat-card-subtitle>
+          {{element.subject}}
+          <mat-card-subtitle>
+            Učebňa
+          </mat-card-subtitle>
+          {{element.classroom}}
+          <mat-card-subtitle>
+            Učitel
+          </mat-card-subtitle>
+          {{element.teacher}}
+        </mat-card>
+        <ng-container></ng-container>
+
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+    </mat-tab>
+  </mat-tab-group>
+</ng-template>
