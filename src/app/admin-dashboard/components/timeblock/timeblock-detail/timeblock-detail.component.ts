@@ -8,6 +8,7 @@ import {TimeblockService} from "../../services/timeblock.service";
 import {TimeblockModel} from "../../models/timeblock.model";
 
 import {MainService} from "../../services/main.service";
+import {Day} from "../../models/day.model";
 
 @Component({
   selector: 'app-timeblock-detail',
@@ -19,7 +20,7 @@ export class TimeblockDetailComponent implements OnInit, OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
   timeblocks: TimeblockModel[] = []
   value = ''
-
+  days: Day[] = []
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -44,7 +45,7 @@ export class TimeblockDetailComponent implements OnInit, OnDestroy {
   }
 
   form: FormGroup = new FormGroup({
-    day: new FormControl(this.data.day, Validators.required),
+    day: new FormControl(this.data.day),
     start: new FormControl(this.data.start),
     finish: new FormControl(this.data.finish),
     group: new FormControl(this.data.group),

@@ -59,6 +59,9 @@ import {authCodeFlowConfig} from "./auth/AuthConfig";
 import {KeycloakAngularModule} from "keycloak-angular";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {CustomDataTimePipe} from "./admin-dashboard/components/pipes/customDataTime.pipe";
+import { UserComponent } from './user/user/user.component';
+import { UserTimeblockAddComponent } from './user/user/components/user-timeblock-add/user-timeblock-add.component';
+import {MatStepperModule} from "@angular/material/stepper";
 function init_app(oauthService: OAuthService) {
   return () => configureWithNewConfigApi(oauthService);
 }
@@ -101,42 +104,45 @@ function configureWithNewConfigApi(oauthService: OAuthService) {
     GroupDetailComponent,
     GroupDeleteComponent,
     GroupAddComponent,
-    CustomDataTimePipe
+    CustomDataTimePipe,
+    UserComponent,
+    UserTimeblockAddComponent
 
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    NgbModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatOptionModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatTableModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatGridListModule,
-    MatSortModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    MatTooltipModule,
-    MatCardModule,
-    MatSlideToggleModule,
-    MatPaginatorModule,
-    MatButtonToggleModule,
-    MatTabsModule,
-    MatProgressBarModule,
-    MatMenuModule,
-    KeycloakAngularModule,
-    OAuthModule.forRoot(),
-    MatProgressSpinnerModule
-  ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        NgbModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatOptionModule,
+        MatCheckboxModule,
+        MatSelectModule,
+        MatTableModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatGridListModule,
+        MatSortModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        MatTooltipModule,
+        MatCardModule,
+        MatSlideToggleModule,
+        MatPaginatorModule,
+        MatButtonToggleModule,
+        MatTabsModule,
+        MatProgressBarModule,
+        MatMenuModule,
+        KeycloakAngularModule,
+        OAuthModule.forRoot(),
+        MatProgressSpinnerModule,
+        MatStepperModule
+    ],
   providers: [
     {
       provide: APP_INITIALIZER,

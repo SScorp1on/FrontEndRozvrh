@@ -6,6 +6,8 @@ import {SubjectListComponent} from "./admin-dashboard/components/subject/subject
 import {AdminDashboardComponent} from "./admin-dashboard/admin-dashboard.component";
 import {GroupListComponent} from "./admin-dashboard/components/group/group-list/group-list.component";
 import {TimeblockListComponent} from "./admin-dashboard/components/timeblock/timeblock-list/timeblock-list.component";
+import {UserComponent} from "./user/user/user.component";
+import {UserTimeblockAddComponent} from "./user/user/components/user-timeblock-add/user-timeblock-add.component";
 
 
 
@@ -16,7 +18,9 @@ const routes: Routes = [
     {path: 'teachers', component: TeacherListComponent},
     {path: 'classrooms', component: ClassroomListComponent},
     {path: 'groups', component: GroupListComponent},
-    {path: 'timeblock', component: TimeblockListComponent}
+    {path: 'timeblock', component: TimeblockListComponent},
+    {path: 'user', component: UserComponent},
+    {path: 'user/timetable-add', component: UserTimeblockAddComponent}
 ];
 
 @NgModule({

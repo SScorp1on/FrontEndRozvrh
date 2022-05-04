@@ -30,4 +30,8 @@ table {
   cursor: auto;
 }
 
+mat-card {
+  width: 60%;
+}
+
 /*# sourceMappingURL=subject-list.component.css.map */

@@ -69,7 +69,6 @@ export class TimeblockListComponent implements OnInit {
   }
 
   onCreate() {
-    this.service.initializeFormGroup()
     const dialogConfig = new MatDialogConfig()
     dialogConfig.disableClose = true
     dialogConfig.autoFocus = true

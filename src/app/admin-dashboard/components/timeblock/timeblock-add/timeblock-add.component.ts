@@ -1,9 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TimeblockService} from "../../services/timeblock.service";
-import {TeacherService} from "../../services/teacher.service";
-import {SubjectService} from "../../services/subject.service";
-import {ClassroomService} from "../../services/classroom.service";
-import {GroupService} from "../../services/group.service";
 import {NotificationService} from "../../services/notification.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialogRef} from "@angular/material/dialog";
@@ -11,7 +7,7 @@ import {Teacher} from "../../models/teacher";
 import {SubjectModel} from "../../models/subject";
 import {Classroom} from "../../models/classroom";
 import {GroupModel} from "../../models/group.model";
-import {Subject, takeUntil} from "rxjs";
+import {Subject} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MainService} from "../../services/main.service";
 import {TimeblockModel} from "../../models/timeblock.model";
@@ -20,7 +16,7 @@ import {Day} from "../../models/day.model";
 @Component({
   selector: 'app-timeblock-add',
   templateUrl: './timeblock-add.component.html',
-  styleUrls: ['./timeblock-add.component.css']
+  styleUrls: ['./timeblock-add.component.scss']
 })
 export class TimeblockAddComponent implements OnInit {
   timeblocks: TimeblockModel[] = []
@@ -29,6 +25,10 @@ export class TimeblockAddComponent implements OnInit {
   classrooms: Classroom[] = []
   groups: GroupModel[]  = []
   destroy$: Subject<boolean> = new Subject<boolean>();
+  days = Day
+  week = null;
+  week1 = null;
+  enumKeys: any = [];
   constructor(
 
     public service: TimeblockService,
@@ -39,8 +39,11 @@ export class TimeblockAddComponent implements OnInit {
 
   ) {
 
+    this.enumKeys = Object.keys(this.days).filter(f => !isNaN(Number(f)))
+      .map(k => parseInt(k));
   }
-  days = Day
+
+
   value = ''
   ngOnInit(): void {
     this.mainService.getAllObjects()
@@ -52,8 +55,8 @@ export class TimeblockAddComponent implements OnInit {
 
   form: FormGroup = new FormGroup({
     day: new FormControl(null, Validators.required),
-    start: new FormControl(0, Validators.pattern(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)),
-    finish: new FormControl(0, Validators.pattern(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)),
+    start: new FormControl(''),
+    finish: new FormControl(''),
     group: new FormControl(''),
     subject: new FormControl(''),
     teacher: new FormControl(''),
@@ -62,8 +65,8 @@ export class TimeblockAddComponent implements OnInit {
   initializeFormGroup(){
     this.form.setValue({
       day: 0,
-      start: 0,
-      finish: 0,
+      start: '',
+      finish: '',
       group: '',
       subject: '',
       teacher: '',
@@ -72,9 +75,8 @@ export class TimeblockAddComponent implements OnInit {
 
   }
   onSubmit() {
-    console.log(this.service.form.value)
-      this.service.addTimeblock(this.service.form.value as TimeblockModel).subscribe(() => {
-        console.log(this.service.form.value)
+    console.log(this.form.value)
+      this.service.addTimeblock(this.form.value as TimeblockModel).subscribe(x => {
       });
       this.form.reset();
       this.initializeFormGroup();

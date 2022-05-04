@@ -1,8 +1,8 @@
 export enum Day{
-  Pondelok= 'Pondelok',
-  Utorok = 'Utorok',
-  Streda = 'Streda',
-  Stvortok= 'Štvortok',
-  Piatok = 'Piatok'
+  Pondelok = 1,
+  Utorok= 2,
+  Streda = 3,
+  Štvrtok = 4,
+  Piatok = 5
  }
 

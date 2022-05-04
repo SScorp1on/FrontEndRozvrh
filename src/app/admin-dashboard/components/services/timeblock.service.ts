@@ -50,24 +50,6 @@ constructor(private http: HttpClient,
     console.log(this.classrooms)
   }) }
 
-form: FormGroup = new FormGroup({
-  day: new FormControl(''),
-  start: new FormControl(0),
-  finish: new FormControl(0),
-  subject: new FormControl(''),
-  teacher: new FormControl(''),
-  classroom: new FormControl('')
-})
-initializeFormGroup() {
-  this.form.setValue({
-    day: '',
-    start: 0,
-    finish: 0,
-    subject: '',
-    teacher: '',
-    classroom: ''
-  })
-}
 getTimeblocks() {
   return this.http.get<TimeblockModel[]>(this.timeblockUrl)
     .pipe(
