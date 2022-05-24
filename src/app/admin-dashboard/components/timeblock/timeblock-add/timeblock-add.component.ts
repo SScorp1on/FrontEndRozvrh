@@ -76,7 +76,8 @@ export class TimeblockAddComponent implements OnInit {
   }
   onSubmit() {
     console.log(this.form.value)
-      this.service.addTimeblock(this.form.value as TimeblockModel).subscribe(x => {
+      this.service.addTimeblock(this.form.value as TimeblockModel).subscribe(timeblocks => {
+        this.timeblocks.push(timeblocks)
       });
       this.form.reset();
       this.initializeFormGroup();

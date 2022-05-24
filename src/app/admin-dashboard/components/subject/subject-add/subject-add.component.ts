@@ -36,7 +36,6 @@ export class SubjectAddComponent implements OnDestroy{
       this.service.initializeFormGroup();
       this.notificationService.success('Subject bol pridan do zoznamu');
       this.onClose();
-
     }
   }
 

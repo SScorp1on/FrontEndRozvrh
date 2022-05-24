@@ -65,7 +65,6 @@ export class SubjectListComponent implements OnInit, OnDestroy {
         alert(`Error ${err}!`);
         this.isLoaded = false;
       }
-
     });
   }
 
@@ -77,7 +76,7 @@ export class SubjectListComponent implements OnInit, OnDestroy {
     dialogConfig.width= "30%"
     const dialogRef = this.dialog.open(SubjectAddComponent, dialogConfig)
 
-    dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(result=>{
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(()=>{
       this.loadSubjects()
     })
   }
@@ -104,6 +103,7 @@ export class SubjectListComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
    this.loadSubjects();
+
   }
 
   ngOnDestroy(){

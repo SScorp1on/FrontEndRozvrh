@@ -19,11 +19,11 @@
     <ng-container matColumnDef="day" >
       <th mat-header-cell  *matHeaderCellDef mat-sort-header="day"> Deň </th>
       <td mat-cell *matCellDef="let element" [ngSwitch]="element.day">
-        <ng-container *ngSwitchCase="1">Pondelok</ng-container>
-        <ng-container *ngSwitchCase="2">Utorok</ng-container>
-        <ng-container *ngSwitchCase="3">Streda</ng-container>
-        <ng-container *ngSwitchCase="4">Štvortok</ng-container>
-        <ng-container *ngSwitchCase="5">Piatok</ng-container>
+        <ng-container *ngSwitchCase="0">Pondelok</ng-container>
+        <ng-container *ngSwitchCase="1">Utorok</ng-container>
+        <ng-container *ngSwitchCase="2">Streda</ng-container>
+        <ng-container *ngSwitchCase="3">Štvortok</ng-container>
+        <ng-container *ngSwitchCase="4">Piatok</ng-container>
       </td>
 
     </ng-container>

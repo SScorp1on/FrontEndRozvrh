@@ -62,6 +62,7 @@ import {CustomDataTimePipe} from "./admin-dashboard/components/pipes/customDataT
 import { UserComponent } from './user/user/user.component';
 import { UserTimeblockAddComponent } from './user/user/components/user-timeblock-add/user-timeblock-add.component';
 import {MatStepperModule} from "@angular/material/stepper";
+import {MatExpansionModule} from "@angular/material/expansion";
 function init_app(oauthService: OAuthService) {
   return () => configureWithNewConfigApi(oauthService);
 }
@@ -109,40 +110,41 @@ function configureWithNewConfigApi(oauthService: OAuthService) {
     UserTimeblockAddComponent
 
   ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        NgbModule,
-        BrowserAnimationsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatOptionModule,
-        MatCheckboxModule,
-        MatSelectModule,
-        MatTableModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatButtonModule,
-        MatGridListModule,
-        MatSortModule,
-        MatDialogModule,
-        MatSnackBarModule,
-        MatTooltipModule,
-        MatCardModule,
-        MatSlideToggleModule,
-        MatPaginatorModule,
-        MatButtonToggleModule,
-        MatTabsModule,
-        MatProgressBarModule,
-        MatMenuModule,
-        KeycloakAngularModule,
-        OAuthModule.forRoot(),
-        MatProgressSpinnerModule,
-        MatStepperModule
-    ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgbModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatOptionModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatTableModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatGridListModule,
+    MatSortModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatTooltipModule,
+    MatCardModule,
+    MatSlideToggleModule,
+    MatPaginatorModule,
+    MatButtonToggleModule,
+    MatTabsModule,
+    MatProgressBarModule,
+    MatMenuModule,
+    KeycloakAngularModule,
+    OAuthModule.forRoot(),
+    MatProgressSpinnerModule,
+    MatStepperModule,
+    MatExpansionModule
+  ],
   providers: [
     {
       provide: APP_INITIALIZER,

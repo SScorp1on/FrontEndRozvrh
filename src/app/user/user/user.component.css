@@ -16,4 +16,15 @@ button:hover {
   color: white;
 }
 
+.col-1 {
+  margin-left: 20px;
+}
+
+mat-card {
+  background-color: palegoldenrod;
+  min-width: 250px;
+  margin: 30px;
+  line-height: 1.5rem;
+}
+
 /*# sourceMappingURL=user.component.css.map */

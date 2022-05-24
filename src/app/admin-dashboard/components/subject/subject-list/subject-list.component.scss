@@ -26,5 +26,13 @@ table {
   cursor: auto;
 }
 mat-card {
-  width: 60%;
+  width: 250px;
+  margin: 30px;
+  background-color: rgb(236, 197, 113);
+}
+.content-flex{
+  display: inline-flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
 }

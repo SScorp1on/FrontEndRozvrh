@@ -3,10 +3,6 @@ import {Teacher} from "../models/teacher";
 import {Classroom} from "../models/classroom";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {MessageService} from "./message.service";
-import {SubjectService} from "./subject.service";
-import {TeacherService} from "./teacher.service";
-import {ClassroomService} from "./classroom.service";
-import {FormControl, FormGroup} from "@angular/forms";
 import {catchError, Observable, of, tap} from "rxjs";
 import {TimeblockModel} from "../models/timeblock.model";
 import {Injectable} from "@angular/core";
@@ -30,25 +26,8 @@ httpOptions = {
   })
 }
 constructor(private http: HttpClient,
-  private messageService: MessageService,
-  private subjectService: SubjectService,
-  private teacherService: TeacherService,
-  private classroomService: ClassroomService
-) { this.subjects = this.subjects.slice();
-  this.subjectService.getSubjects().subscribe(x => {
-    this.subjects = x
-    console.log(this.subjects)
-  })
-  this.teachers = this.teachers.slice();
-  this.teacherService.getTeachers().subscribe(x => {
-    this.teachers = x
-    console.log(this.teachers)
-  })
-  this.classrooms = this.classrooms.slice();
-  this.classroomService.getClassrooms().subscribe(x => {
-    this.classrooms = x
-    console.log(this.classrooms)
-  }) }
+  private messageService: MessageService
+) { }
 
 getTimeblocks() {
   return this.http.get<TimeblockModel[]>(this.timeblockUrl)
@@ -85,6 +64,22 @@ updateTimeblock(id:number, timeblock: TimeblockModel){
     catchError(this.handleError<TimeblockModel>('updateTimeblockModel'))
   );
 }
+
+getTimeBlocksBySelect(type: string, name: string){
+  return this.http.get<TimeblockModel[]>(`${this.timeblockUrl}?type=${type}&name=${name}`)
+.pipe(
+    tap(_ => this.log('fetched timeblocks')),
+  )
+}
+
+
+  getTimeBlocksBySelectWithoutName(type: string): Observable<any>{
+    return this.http.get<TimeblockModel[]>(`${this.timeblockUrl}?type=${type}`)
+      .pipe(
+        tap(_ => this.log('fetched timeblocks')),
+      )
+  }
+
 
 private handleError<T>(operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {

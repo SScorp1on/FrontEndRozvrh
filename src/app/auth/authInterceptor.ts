@@ -7,7 +7,6 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {OAuthService} from "angular-oauth2-oidc";
-import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'

@@ -12,8 +12,8 @@ import {UserTimeblockAddComponent} from "./user/user/components/user-timeblock-a
 
 
 const routes: Routes = [
-    {path: '', redirectTo: 'admin-dashboard', pathMatch: 'full'},
-    {path: 'admin-dashboard', component: AdminDashboardComponent },
+    {path: '', redirectTo: 'user', pathMatch: 'full'},
+    {path: 'admin-dashboard', component: AdminDashboardComponent},
     {path: 'subjects', component: SubjectListComponent},
     {path: 'teachers', component: TeacherListComponent},
     {path: 'classrooms', component: ClassroomListComponent},

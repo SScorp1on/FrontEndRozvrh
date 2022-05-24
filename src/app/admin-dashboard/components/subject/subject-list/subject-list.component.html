@@ -73,9 +73,8 @@
 </div>
   </mat-tab>
 <mat-tab label="Zobrazenie 2">
-<mat-grid-list cols="3" rowHeight="2:1">
-  <mat-grid-tile *ngFor="let element of subjects">
-    <mat-card>
+<div class="content-flex">
+    <mat-card *ngFor="let element of subjects">
       <mat-card-header>
         <mat-card-subtitle>
           Nazov Predmetu
@@ -116,8 +115,7 @@
         </button>
       </mat-card-actions>
     </mat-card>
-  </mat-grid-tile>
-
-</mat-grid-list>
+</div>
 </mat-tab>
 </mat-tab-group>
+

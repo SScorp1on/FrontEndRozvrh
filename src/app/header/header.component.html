@@ -1,19 +1,19 @@
-<mat-toolbar class="text-white vh-5 gradient-custom header" >
+<mat-toolbar class="text-white vh-5 gradient-custom header " >
   <mat-icon>today</mat-icon>
 
   <h1> Rozvrh</h1>
   <span class="example-spacer"></span>
-    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <button mat-icon-button [matMenuTriggerFor]="menu" >
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
-        <mat-icon>manage_accounts</mat-icon>
-        <mat-label>Edit profile</mat-label>
+      <button mat-menu-item routerLink="/admin-dashboard">
+        <mat-icon>admin_panel_settings</mat-icon>
+        <mat-label>admin-dashboard</mat-label>
       </button>
-      <button mat-menu-item>
-        <mat-icon>settings</mat-icon>
-      <mat-label>Settings</mat-label>
+      <button mat-menu-item routerLink="/user">
+        <mat-icon>person</mat-icon>
+      <mat-label>User</mat-label>
       </button>
       <button (click)="logout()" mat-menu-item>
         <mat-icon class=>logout</mat-icon>

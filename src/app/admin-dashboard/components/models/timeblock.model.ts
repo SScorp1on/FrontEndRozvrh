@@ -5,8 +5,7 @@ import {Time} from "@angular/common";
 import {Day} from "./day.model";
 
 export interface TimeblockModel{
-  id: number
-  name: string,
+  id: number,
   day: Day,
   subjectId:number,
   teacherId: number,
