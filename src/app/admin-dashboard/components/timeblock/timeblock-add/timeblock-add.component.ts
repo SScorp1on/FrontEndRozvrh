@@ -7,7 +7,7 @@ import {Teacher} from "../../models/teacher";
 import {SubjectModel} from "../../models/subject";
 import {Classroom} from "../../models/classroom";
 import {GroupModel} from "../../models/group.model";
-import {Subject} from "rxjs";
+import {Subject, takeUntil} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MainService} from "../../services/main.service";
 import {TimeblockModel} from "../../models/timeblock.model";
@@ -26,8 +26,6 @@ export class TimeblockAddComponent implements OnInit {
   groups: GroupModel[]  = []
   destroy$: Subject<boolean> = new Subject<boolean>();
   days = Day
-  week = null;
-  week1 = null;
   enumKeys: any = [];
   constructor(
 
@@ -43,8 +41,6 @@ export class TimeblockAddComponent implements OnInit {
       .map(k => parseInt(k));
   }
 
-
-  value = ''
   ngOnInit(): void {
     this.mainService.getAllObjects()
   }
@@ -76,13 +72,15 @@ export class TimeblockAddComponent implements OnInit {
   }
   onSubmit() {
     console.log(this.form.value)
-      this.service.addTimeblock(this.form.value as TimeblockModel).subscribe(timeblocks => {
+      this.service.addTimeblock(this.form.value as TimeblockModel).pipe(takeUntil(this.destroy$)).subscribe({next: timeblocks => {
         this.timeblocks.push(timeblocks)
-      });
-      this.form.reset();
-      this.initializeFormGroup();
-      this.notificationService.success('Rozvrh bol pridan do zoznamu');
-      this.onClose();
+      }, error: err => {
+        this.notificationService.warn(err.error.text)
+      },complete: () =>{
+        this.notificationService.success('Rozvrh bol pridan do zoznamu');
+        this.onClose();
+      }});
+
 
   }
 

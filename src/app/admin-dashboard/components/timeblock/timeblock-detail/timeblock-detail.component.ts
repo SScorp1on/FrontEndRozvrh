@@ -3,24 +3,22 @@ import {Subject, takeUntil} from "rxjs";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {NotificationService} from "../../services/notification.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {TimeblockService} from "../../services/timeblock.service";
 import {TimeblockModel} from "../../models/timeblock.model";
 
 import {MainService} from "../../services/main.service";
-import {Day} from "../../models/day.model";
 
 @Component({
   selector: 'app-timeblock-detail',
   templateUrl: './timeblock-detail.component.html',
-  styleUrls: ['./timeblock-detail.component.css']
+  styleUrls: ['./timeblock-detail.component.scss']
 })
 export class TimeblockDetailComponent implements OnInit, OnDestroy {
 
   destroy$: Subject<boolean> = new Subject<boolean>();
   timeblocks: TimeblockModel[] = []
-  value = ''
-  days: Day[] = []
+  days = [{key: 0, value: 'Pondelok'}, {key: 1, value: 'Utorok'},{key: 2, value: 'Streda'},{key: 3, value: 'Štvrtok'},{key: 4, value: 'Piatok'}]
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -68,13 +66,15 @@ export class TimeblockDetailComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     console.log(this.form.value, this.data.id)
-    this.service.updateTimeblock(this.data.id , this.form.value).pipe(takeUntil(this.destroy$)).subscribe(timeblock =>{
+    this.service.updateTimeblock(this.data.id , this.form.value).pipe(takeUntil(this.destroy$)).subscribe({next: () =>{
       this.timeblocks.push(this.form.value)
-    });
-    this.form.reset();
-    this.initializeFormGroup();
-    this.notificationService.success('Rozvrh bol pridan do zoznamu');
-    this.onClose();
+    }, error: err => {
+      this.notificationService.warn(err.error.text)
+    },complete: ()=>{
+      this.notificationService.success('Rozvrh bol pridan do zoznamu');
+      this.onClose();
+    }});
+
 
   }
 

@@ -26,7 +26,7 @@ export class TimeblockListComponent implements OnInit {
 
   timeblocks: TimeblockModel[] = []
 
-  displayedColumns: string[] = ['id', 'day', 'cas','group', 'ucitel', 'predmet', 'ucebna', 'EDIT', 'DELETE'];
+  displayedColumns: string[] = ['id', 'day', 'time','group', 'teacher', 'classroom','subject', 'EDIT', 'DELETE'];
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   dataSourceTimeblocks: any;
@@ -72,10 +72,10 @@ export class TimeblockListComponent implements OnInit {
     const dialogConfig = new MatDialogConfig()
     dialogConfig.disableClose = true
     dialogConfig.autoFocus = true
-    dialogConfig.width = "30%"
+    dialogConfig.width = "400px"
     const dialogRef = this.dialog.open(TimeblockAddComponent, dialogConfig)
 
-    dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(result => {
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.loadTimeblocks()
     })
   }
@@ -85,18 +85,18 @@ export class TimeblockListComponent implements OnInit {
     const dialogConfig = new MatDialogConfig()
     dialogConfig.disableClose = true
     dialogConfig.autoFocus = true
-    dialogConfig.width = "30%"
+    dialogConfig.width = "40px"
     const dialogRef = this.dialog.open(TimeblockDetailComponent, {
       data: {id: id, day: day, start: start, finish: finish, group: group, teacher: teacher, subject: subject, classroom: classroom}
-
     })
-    dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(result => {
-
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.loadTimeblocks()
-
     })
   }
-
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceTimeblocks.filter = filterValue.trim().toLowerCase();
+  }
   ngOnInit(): void {
     this.loadTimeblocks()
   }
@@ -118,9 +118,14 @@ export class TimeblockListComponent implements OnInit {
       switch (sort.active) {
         case 'id':
           return compare(a.id, b.id, isAsc);
-        case 'den':
+        case 'day':
           return compare(a.day, b.day, isAsc);
-
+        case 'teacher':
+          return compare(a.teacher.firstName,b.teacher.firstName, isAsc)
+        case 'subject':
+          return compare(a.subject.name, b.subject.name, isAsc)
+        case 'classroom':
+          return compare(a.classroom.name,b.classroom.name,isAsc)
         default:
           return 0;
       }
@@ -133,7 +138,7 @@ export class TimeblockListComponent implements OnInit {
       data: {id: id},
       width: '250px'
     })
-    dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(result => {
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.loadTimeblocks()
 
     });

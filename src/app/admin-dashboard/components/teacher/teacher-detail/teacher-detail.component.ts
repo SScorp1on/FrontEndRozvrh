@@ -38,13 +38,16 @@ export class TeacherDetailComponent {
   }
   onSubmit() {
     console.log(this.data)
-    this.service.updateTeacher(this.data.id , this.form.value).subscribe(teacher =>{
+    this.service.updateTeacher(this.data.id , this.form.value).subscribe({next: () =>{
       this.teachers.push(this.form.value)
-    });
-    this.form.reset();
-    this.initializeFormGroup();
-    this.notificationService.success('Učitel bol pridan do zoznamu');
-    this.onClose();
+    }, error: err => {
+      this.notificationService.warn(err.error.text)
+        console.log(err)
+      }, complete: () => {
+        this.notificationService.success('Učitel bol pridan do zoznamu');
+        this.onClose();
+      }});
+
 
   }
 

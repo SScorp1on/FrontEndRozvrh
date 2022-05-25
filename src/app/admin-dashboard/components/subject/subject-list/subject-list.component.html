@@ -8,9 +8,7 @@
     SPÄŤ
   </button>
 </div>
-<mat-tab-group>
-  <mat-tab label="Zobrazenie 1">
-<mat-form-field appearance="standard">
+<mat-form-field style="margin-left: 10px" appearance="standard">
   <mat-label>Filter</mat-label>
   <input matInput (keyup)="applyFilter($event)"  #input >
 </mat-form-field>
@@ -71,51 +69,4 @@
     mode="indeterminate">
   </mat-progress-spinner>
 </div>
-  </mat-tab>
-<mat-tab label="Zobrazenie 2">
-<div class="content-flex">
-    <mat-card *ngFor="let element of subjects">
-      <mat-card-header>
-        <mat-card-subtitle>
-          Nazov Predmetu
-        </mat-card-subtitle>
-        <mat-card-title >
-          {{element.name}}
-        </mat-card-title>
-
-      </mat-card-header>
-      <mat-card-content >
-        <mat-card-subtitle>
-          Typ Predmetu
-        </mat-card-subtitle>
-        <mat-card-title>
-        {{element.type}}
-        </mat-card-title>
-        <br>
-        <mat-card-subtitle>
-          Potrebuje počitač
-        </mat-card-subtitle>
-        <mat-card-title>
-          <ng-container *ngIf="element.computersRequired; else elseBlock">
-            Potrebuje
-          </ng-container>
-          <ng-template #elseBlock>
-           Nepotrebuje
-          </ng-template>
-        </mat-card-title>
-
-      </mat-card-content>
-
-      <mat-card-actions>
-        <button matTooltip="Zmeniť" matTooltipPosition="below" color="primary" mat-button (click)="onEdit(element.id, element.name, element.type, element.computersRequired)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button matTooltip="Odstrániť" color="warn" matTooltipPosition="below" mat-button (click)="onDelete(element.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </mat-card-actions>
-    </mat-card>
-</div>
-</mat-tab>
-</mat-tab-group>
 

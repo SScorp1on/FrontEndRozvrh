@@ -50,13 +50,15 @@ export class SubjectDetailComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     console.log(this.data)
-    this.service.updateSubject(this.data.id , this.form.value).pipe(takeUntil(this.destroy$)).subscribe(subject =>{
+    this.service.updateSubject(this.data.id , this.form.value).pipe(takeUntil(this.destroy$)).subscribe({next: () =>{
       this.subjects.push(this.form.value)
-    });
-    this.form.reset();
-    this.initializeFormGroup();
-    this.notificationService.success('Predmet bol pridan do zoznamu');
-    this.onClose();
+    }, error: err => {
+      this.notificationService.warn(err.error.text)
+    },complete: () => {
+      this.notificationService.success('Predmet bol pridan do zoznamu');
+      this.onClose();
+    }});
+
 
   }
 

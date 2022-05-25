@@ -21,10 +21,19 @@ button:hover {
 }
 
 mat-card {
-  background-color: palegoldenrod;
+  background-color: #e3db5e;
   min-width: 250px;
   margin: 30px;
   line-height: 1.5rem;
+}
+
+th {
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.mat-card {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 
 /*# sourceMappingURL=user.component.css.map */

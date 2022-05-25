@@ -55,7 +55,7 @@ export class GroupService {
   addGroup(group: GroupModel): Observable<GroupModel> {
     return this.http.post<GroupModel>(this.groupUrl, group, this.httpOptions).pipe(
       tap((newGroup: GroupModel) => this.log(`added group w/ id=${newGroup.id}`)),
-      catchError(this.handleError<GroupModel>('addGroup'))
+   //   catchError(this.handleError<GroupModel>('addGroup'))
     )
   }
 
@@ -63,14 +63,14 @@ export class GroupService {
     const Url = `${this.groupUrl}/${id}`;
     return this.http.delete<GroupModel>(Url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted group id=${id}`)),
-      catchError(this.handleError<GroupModel>('deleteGroup'))
+    //  catchError(this.handleError<GroupModel>('deleteGroup'))
     );
   }
 
   updateGroup(id: number, group: GroupModel) {
     return this.http.put(`${this.groupUrl}/${id}`, group, this.httpOptions).pipe(
       tap(_ => (group: GroupModel) => this.log(`updated group id=${group.id}`)),
-      catchError(this.handleError<GroupModel>('updateGroup'))
+     // catchError(this.handleError<GroupModel>('updateGroup'))
     );
   }
 

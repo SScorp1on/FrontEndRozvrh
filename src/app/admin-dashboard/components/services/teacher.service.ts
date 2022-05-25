@@ -46,13 +46,13 @@ export class TeacherService{
     const url = `${this.teachersUrl}/${id}`;
     return this.http.get<Teacher>(url).pipe(
       tap(_ => this.log(`fetched teacher id=${id}`)),
-      catchError(this.handleError<Teacher>(`getTeacher id=${id}`))
+    //  catchError(this.handleError<Teacher>(`getTeacher id=${id}`))
     );
   }
   addTeacher(teacher: Teacher): Observable<Teacher> {
     return this.http.post<Teacher>(this.teachersUrl,teacher,this.httpOptions).pipe(
       tap((newTeacher: Teacher) => this.log(`added teacher w/ id=${newTeacher.id}`)),
-      catchError(this.handleError<Teacher>('addTeacher'))
+    //  catchError(this.handleError<Teacher>('addTeacher'))
     )
   }
   deleteTeacher(id: number): Observable<Teacher> {
@@ -60,14 +60,14 @@ export class TeacherService{
 
     return this.http.delete<Teacher>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted teacher id=${id}`)),
-      catchError(this.handleError<Teacher>('deleteTeacher'))
+    //  catchError(this.handleError<Teacher>('deleteTeacher'))
     );
   }
 
   updateTeacher(id: number, teacher: Teacher){
     return this.http.put(`${this.teachersUrl}/${id}`, teacher, this.httpOptions).pipe(
       tap(_ => this.log(`updated teacher id=${teacher.id}`)),
-      catchError(this.handleError<any>('updateTeacher'))
+   //   catchError(this.handleError<any>('updateTeacher'))
     );
   }
 

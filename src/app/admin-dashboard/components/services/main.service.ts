@@ -1,6 +1,4 @@
 import {Injectable, OnDestroy, OnInit} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {MessageService} from "./message.service";
 import {TeacherService} from "./teacher.service";
 import {SubjectService} from "./subject.service";
 import {ClassroomService} from "./classroom.service";
@@ -9,7 +7,7 @@ import {SubjectModel} from "../models/subject";
 import {Teacher} from "../models/teacher";
 import {Classroom} from "../models/classroom";
 import {GroupModel} from "../models/group.model";
-import {Subject, takeUntil} from "rxjs";
+import {Subject} from "rxjs";
 import {Day} from "../models/day.model";
 
 @Injectable({
@@ -31,7 +29,7 @@ export class MainService implements OnInit, OnDestroy{
   teachers: Teacher[] = []
   classrooms: Classroom[] = []
   groups: GroupModel[] = []
-  days: Day[] = []
+  days: Day[] = [0,1,2,3,4]
 
 
   getAllObjects(){

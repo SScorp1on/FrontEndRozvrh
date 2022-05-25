@@ -6,7 +6,7 @@
         <mat-form-field class="full-width">
           <mat-label>Nazov predmetu:</mat-label>
           <input  formControlName="name"  matInput>
-          <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''" >
+          <button *ngIf="service.form.controls['name'].valid" matSuffix mat-icon-button aria-label="Clear" (click)="service.form.controls['name'].reset()" >
             <mat-icon>close</mat-icon>
           </button>
           <mat-error>Pole nemôže byť prázdne</mat-error>

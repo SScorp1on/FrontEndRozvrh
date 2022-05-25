@@ -1,8 +1,6 @@
-import {Component, Inject, OnDestroy} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {SubjectModel} from "../../models/subject";
 import {SubjectService} from "../../services/subject.service";
-import {Subject, takeUntil} from "rxjs";
 import {NotificationService} from "../../services/notification.service";
 
 @Component({
@@ -22,14 +20,20 @@ export class SubjectDeleteComponent {
 
   submitDelete(){
     console.log(this.data)
-    this.delete(this.data.id)
-    this.notificationService.success('Predmet bol odstranen do zoznamu');
-    this.dialogRef.close()
+    this.delete()
+
   }
   onNoClick(): void{
     this.dialogRef.close()
   }
-  delete(id: number): void {
-    this.service.deleteSubject(id).subscribe()
+  delete(): void {
+    this.service.deleteSubject(this.data.id).subscribe( {next: () => {
+    }, error: err => {
+      this.notificationService.warn(err.message.text)
+        console.log(err)
+    },complete: () => {
+      this.notificationService.success('Predmet bol odstranen do zoznamu');
+      this.dialogRef.close()
+    }})
   }
 }

@@ -31,9 +31,7 @@ h1 {
   color: black;
   font-size: 1.2rem;
   padding: 1rem;
-  margin-right: 1rem;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+  margin: 0.5rem 0.5rem 0.5rem 10px;
 }
 
 .action-button:hover {

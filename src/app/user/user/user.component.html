@@ -29,7 +29,7 @@
   </div>
 
 </div>
-<mat-button-toggle-group #group="matButtonToggleGroup">
+<mat-button-toggle-group style="margin: 1rem" #group="matButtonToggleGroup">
   <mat-button-toggle checked value="1" aria-label="Text align left">
     Zobrazenie podľa dní
   </mat-button-toggle>
@@ -37,6 +37,7 @@
     Riadkove zobrazenie
   </mat-button-toggle>
 </mat-button-toggle-group>
+<div *ngIf="filtered.length != 0; else elseBlock1">
 <div *ngIf="group.value == 1">
 <mat-tab-group>
   <mat-tab *ngIf="f[0].length != 0" label="Pondelok">
@@ -240,7 +241,7 @@
       <th>Deň</th>
     </tr>
     </thead>    <tbody>
-  <tr class="border" *ngIf="f['0'].length !=0 ">
+  <tr class="border-bottom" *ngIf="f['0'].length !=0 ">
     <th >
       Pondelok
     </th>
@@ -276,7 +277,7 @@
     </td>
 
   </tr>
-  <tr class="border" *ngIf="f['1'].length !=0 ">
+  <tr class="border-bottom" *ngIf="f['1'].length !=0 ">
     <th >
       Utorok
     </th>
@@ -312,7 +313,7 @@
     </td>
 
   </tr>
-  <tr class="border" *ngIf="f['2'].length !=0 ">
+  <tr class="border-bottom" *ngIf="f['2'].length !=0 ">
     <th >
       Streda
     </th>
@@ -348,7 +349,7 @@
     </td>
 
   </tr>
-  <tr class="border" *ngIf="f['3'].length !=0 " >
+  <tr class="border-bottom" *ngIf="f['3'].length !=0 " >
     <th >
       Štvortok
     </th>
@@ -384,7 +385,7 @@
     </td>
 
   </tr>
-  <tr class="border" *ngIf="f['4'].length !=0 ">
+  <tr class="border-bottom" *ngIf="f['4'].length !=0 ">
     <th >
       Piatok
     </th>
@@ -416,12 +417,11 @@
           Učitel
         </mat-card-subtitle>
       </mat-card>
-
     </td>
-
   </tr>
   </tbody>
   </table>
 </div>
 
-
+</div>
+<ng-template #elseBlock1>Žiadny rozvrh pre tento filter</ng-template>

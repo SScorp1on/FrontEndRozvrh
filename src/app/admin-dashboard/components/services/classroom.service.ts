@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {MessageService} from "./message.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {catchError, map, Observable, of, tap} from "rxjs";
+import {catchError, Observable, of, tap} from "rxjs";
 import {Classroom} from "../models/classroom";
 
 @Injectable({
@@ -49,22 +49,21 @@ export class ClassroomService{
   addClassroom(classroom: Classroom): Observable<Classroom> {
     return this.http.post<Classroom>(this.classroomsUrl,classroom,this.httpOptions).pipe(
       tap((newClassroom: Classroom) => this.log(`added classroom w/ id=${newClassroom.id}`)),
-      catchError(this.handleError<Classroom>('addClassroom'))
+   //   catchError(this.handleError<Classroom>('addClassroom'))
     )
   }
   deleteClassroom(id: number): Observable<Classroom> {
     const url = `${this.classroomsUrl}/${id}`;
-
     return this.http.delete<Classroom>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted classroom id=${id}`)),
-      catchError(this.handleError<Classroom>('deleteClassroom'))
+    //  catchError(this.handleError<Classroom>('deleteClassroom'))
     );
   }
 
   updateClassroom(id: number, classroom: Classroom){
     return this.http.put(`${this.classroomsUrl}/${id}`, classroom, this.httpOptions).pipe(
       tap(_ => this.log(`updated classroom id=${classroom.id}`)),
-      catchError(this.handleError<any>('updateClassroom'))
+    //  catchError(this.handleError<any>('updateClassroom'))
     );
   }
 

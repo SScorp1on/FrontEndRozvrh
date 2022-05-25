@@ -12,28 +12,25 @@ import {Classroom} from "../../models/classroom";
 })
 export class ClassroomAddComponent{
 
-  valueName = ''
-  valueAddress= ''
-
   constructor(public service: ClassroomService,
               private _snackBar: MatSnackBar,
               private notificationService: NotificationService,
               public dialogRef: MatDialogRef<ClassroomAddComponent>) {
   }
 
-
   rooms: Classroom[] = []
 
   onSubmit() {
     if (this.service.form.valid) {
-      this.service.addClassroom(this.service.form.value as Classroom).subscribe(classroom =>{
+      this.service.addClassroom(this.service.form.value as Classroom).subscribe({next: classroom =>{
         this.rooms.push(classroom)
-      });
-      this.service.form.reset();
-      this.service.initializeFormGroup();
-      this.notificationService.success('Učebňa bola pridana do zoznamu');
-      this.onClose();
-
+      }, error: err => {
+        this.notificationService.warn(err.error.text)
+          console.log(err)
+        }, complete: () => {
+          this.notificationService.success('Učebňa bola pridana do zoznamu');
+          this.onClose();
+        }});
     }
   }
   onClose() {

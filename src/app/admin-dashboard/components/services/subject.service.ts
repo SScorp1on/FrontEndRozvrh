@@ -43,32 +43,24 @@ getSubjects(){
     )
 }
 
-
-getSubject(id: number): Observable<SubjectModel>{
-  const Url = `${this.subjectsUrl}/${id}`;
-  return this.http.get<SubjectModel>(Url).pipe(
-    tap(_ => this.log(`fetched subject id=${id}`)),
-    catchError(this.handleError<SubjectModel>(`getSubject id=${id}`))
-  );
-}
 addSubject(subject: SubjectModel): Observable<SubjectModel> {
   return this.http.post<SubjectModel>(this.subjectsUrl,subject,this.httpOptions).pipe(
-    tap((newSubject: SubjectModel) => this.log(`added subject w/ id=${newSubject.id}`)),
-    catchError(this.handleError<SubjectModel>('addSubject'))
+    tap((newSubject: SubjectModel) => this.log(`added subject w/ id=${newSubject.id}`))
+   // catchError(this.handleError<SubjectModel>('addSubject'))
   )
 }
 deleteSubject(id: number): Observable<SubjectModel> {
   const Url = `${this.subjectsUrl}/${id}`;
   return this.http.delete<SubjectModel>(Url, this.httpOptions).pipe(
-    tap(_ => this.log(`deleted subject id=${id}`)),
-    catchError(this.handleError<SubjectModel>('deleteSubject'))
+    tap(_ => this.log(`deleted subject id=${id}`))
+   // catchError(this.handleError<SubjectModel>('deleteSubject'))
   );
 }
 
 updateSubject(id:number, subject: SubjectModel){
   return this.http.put(`${this.subjectsUrl}/${id}`, subject, this.httpOptions).pipe(
-    tap(_ =>(subject: SubjectModel) => this.log(`updated subject id=${subject.id}`)),
-    catchError(this.handleError<SubjectModel>('updateSubject'))
+    tap(_ =>(subject: SubjectModel) => this.log(`updated subject id=${subject.id}`))
+    // catchError(this.handleError<SubjectModel>('updateSubject'))
   );
 }
 

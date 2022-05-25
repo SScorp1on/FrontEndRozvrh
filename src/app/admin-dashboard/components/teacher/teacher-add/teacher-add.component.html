@@ -1,11 +1,15 @@
 <div class="form-container">
   <form [formGroup]="service.form" >
+    <mat-label><h1>Formular</h1></mat-label>
     <div class="forms">
       <div class="row">
         <div class="col-md-12">
           <mat-form-field class="full-width">
             <mat-label id="firstName">Meno:</mat-label>
             <input  formControlName="firstName" required matInput >
+            <button *ngIf="service.form.controls['firstName'].valid" matSuffix mat-icon-button aria-label="Clear" (click)="service.form.controls['firstName'].reset()" >
+              <mat-icon>close</mat-icon>
+            </button>
             <mat-error>
               Meno je <strong>povinne</strong>
             </mat-error>
@@ -15,6 +19,9 @@
           <mat-form-field class="full-width">
             <mat-label >Priezvisko:</mat-label>
             <input formControlName="lastName" required matInput >
+            <button *ngIf="service.form.controls['lastName'].valid" matSuffix mat-icon-button aria-label="Clear" (click)="service.form.controls['lastName'].reset()" >
+              <mat-icon>close</mat-icon>
+            </button>
             <mat-error>
               Priezvisko je <strong>povinne</strong>
             </mat-error>
@@ -25,6 +32,9 @@
         <mat-form-field class="full-width">
           <mat-label id="contact">Contact:</mat-label>
           <input type="email"  placeholder="Priklad: ex@example.com" formControlName="contact" required matInput >
+          <button *ngIf="service.form.controls['contact'].value" matSuffix mat-icon-button aria-label="Clear" (click)="service.form.controls['contact'].reset()" >
+            <mat-icon>close</mat-icon>
+          </button>
           <mat-error>
             Zadajte platnú e-mailovú adresu
           </mat-error>

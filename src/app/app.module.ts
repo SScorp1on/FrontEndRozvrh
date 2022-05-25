@@ -58,9 +58,7 @@ import {AuthInterceptor} from "./auth/authInterceptor";
 import {authCodeFlowConfig} from "./auth/AuthConfig";
 import {KeycloakAngularModule} from "keycloak-angular";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {CustomDataTimePipe} from "./admin-dashboard/components/pipes/customDataTime.pipe";
 import { UserComponent } from './user/user/user.component';
-import { UserTimeblockAddComponent } from './user/user/components/user-timeblock-add/user-timeblock-add.component';
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatExpansionModule} from "@angular/material/expansion";
 function init_app(oauthService: OAuthService) {
@@ -105,9 +103,7 @@ function configureWithNewConfigApi(oauthService: OAuthService) {
     GroupDetailComponent,
     GroupDeleteComponent,
     GroupAddComponent,
-    CustomDataTimePipe,
     UserComponent,
-    UserTimeblockAddComponent
 
   ],
   imports: [

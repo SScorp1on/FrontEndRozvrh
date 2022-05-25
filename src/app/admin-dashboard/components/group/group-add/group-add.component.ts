@@ -18,24 +18,21 @@ export class GroupAddComponent  {
               public dialogRef: MatDialogRef<GroupAddComponent>) {
   }
 
-  value = ''
   groups: GroupModel[] = []
-
-
 
   onSubmit() {
     if (this.service.form.valid) {
-      this.service.addGroup(this.service.form.value as GroupModel).subscribe(group =>{
+      this.service.addGroup(this.service.form.value as GroupModel).subscribe({next: group =>{
         this.groups.push(group)
-      });
-      this.service.form.reset();
-      this.service.initializeFormGroup();
-      this.notificationService.success('Skupina bola pridana do zoznamu');
-      this.onClose();
-
+      }, error: err => {
+        this.notificationService.warn(err.error.text)
+          console.log(err)
+        }, complete: () => {
+          this.notificationService.success('Skupina bola pridana do zoznamu');
+          this.onClose();
+        }});
     }
   }
-
   onClose() {
     this.service.form.reset();
     this.service.initializeFormGroup();

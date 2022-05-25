@@ -19,9 +19,17 @@ export class TimeblockDeleteComponent {
   ) {}
 
   submitDelete(){
-    this.service.deleteTimeblock(this.data.id).subscribe()
-    this.notificationService.success('Rozvrh bol odstranen do zoznamu');
-    this.dialogRef.close()
+    this.service.deleteTimeblock(this.data.id).subscribe({
+       next: () => {
+
+    }, error: err => {
+      this.notificationService.warn(err.error.text)
+    },complete: () => {
+      this.notificationService.success('Rozvrh bol odstranen do zoznamu');
+      this.dialogRef.close()
+    }})
+
+
   }
   onNoClick(): void{
     this.dialogRef.close()

@@ -23,13 +23,16 @@ export class TeacherAddComponent {
 
   onSubmit() {
     if (this.service.form.valid) {
-      this.service.addTeacher(this.service.form.value as Teacher).subscribe(teacher =>{
+      this.service.addTeacher(this.service.form.value as Teacher).subscribe({next: teacher => {
         this.teachers.push(teacher)
-      });
-      this.service.form.reset();
-      this.service.initializeFormGroup();
-      this.notificationService.success('Ucitel bol pridan do zoznamu');
-      this.onClose();
+      }, error: err => {
+        this.notificationService.warn(err.error.text)
+          console.log(err)
+        }, complete: () => {
+          this.notificationService.success('Ucitel bol pridan do zoznamu');
+          this.onClose();
+        }});
+
 
     }
   }

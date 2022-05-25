@@ -1,8 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Subject, takeUntil} from "rxjs";
-import {SubjectModel} from "../../models/subject";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {SubjectService} from "../../services/subject.service";
 import {NotificationService} from "../../services/notification.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -18,7 +16,6 @@ export class GroupDetailComponent implements OnInit {
 
   destroy$: Subject<boolean> = new Subject<boolean>();
   groups: GroupModel[] = []
-  value = ''
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -50,13 +47,15 @@ export class GroupDetailComponent implements OnInit {
   }
 
   onSubmit() {
-    this.service.updateGroup(this.data.id, this.form.value).pipe(takeUntil(this.destroy$)).subscribe(group => {
+    this.service.updateGroup(this.data.id, this.form.value).pipe(takeUntil(this.destroy$)).subscribe({next: () => {
       this.groups.push(this.form.value)
-    });
-    this.form.reset();
-    this.initializeFormGroup();
-    this.notificationService.success('Skupina bola pridana do zoznamu');
-    this.onClose();
+    }, error: err => {
+      this.notificationService.warn(err.error.text)
+        console.log(err)
+      },complete: () => {
+        this.notificationService.success('Skupina bola pridana do zoznamu');
+        this.onClose();
+      }});
 
   }
 

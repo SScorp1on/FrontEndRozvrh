@@ -5,6 +5,16 @@ nav button {
   height: 100%;
 }
 
+::ng-deep .error-message {
+  background-color: red;
+  color: white;
+}
+
+::ng-deep .success-message {
+  background-color: green;
+  color: white;
+}
+
 /*# sourceMappingURL=app.component.scss.map */
 
 /*# sourceMappingURL=app.component.css.map */

@@ -47,21 +47,20 @@ getTimeblock(id: number): Observable<TimeblockModel>{
 addTimeblock(timeblock: TimeblockModel): Observable<TimeblockModel> {
   return this.http.post<TimeblockModel>(this.timeblockUrl,timeblock,this.httpOptions).pipe(
     tap((newTimeblockModel: TimeblockModel) => this.log(`added timeblock w/ id=${newTimeblockModel.id}`)),
-    catchError(this.handleError<TimeblockModel>('addTimeblockModel'))
+  //  catchError(this.handleError<TimeblockModel>('addTimeblockModel'))
   )
 }
 deleteTimeblock(id: number): Observable<TimeblockModel> {
   const url = `${this.timeblockUrl}/${id}`;
   return this.http.delete<TimeblockModel>(url, this.httpOptions).pipe(
     tap(_ => this.log(`deleted timeblock id=${id}`)),
-    catchError(this.handleError<TimeblockModel>('deleteTimeblockModel'))
+   // catchError(this.handleError<TimeblockModel>('deleteTimeblockModel'))
   );
 }
 
 updateTimeblock(id:number, timeblock: TimeblockModel){
   return this.http.put(`${this.timeblockUrl}/${id}`, timeblock, this.httpOptions).pipe(
     tap(_ =>(rozvrh: TimeblockModel) => this.log(`updated timeblock id=${rozvrh.id}`)),
-    catchError(this.handleError<TimeblockModel>('updateTimeblockModel'))
   );
 }
 

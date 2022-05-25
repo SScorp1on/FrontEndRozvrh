@@ -22,20 +22,19 @@ export class SubjectAddComponent implements OnDestroy{
   }
 
   type = [] = [{value: 'Povinny'}, {value: 'Vyberovy'}, {value: 'Povinne-voliteľny'}]
-  value = ''
   subjects: SubjectModel[] = []
-
-
 
   onSubmit() {
     if (this.service.form.valid) {
-      this.service.addSubject(this.service.form.value as SubjectModel).pipe(takeUntil(this.destroy$)).subscribe(subject =>{
+      this.service.addSubject(this.service.form.value as SubjectModel).pipe(takeUntil(this.destroy$)).subscribe({next: subject =>{
         this.subjects.push(subject)
-      });
-      this.service.form.reset();
-      this.service.initializeFormGroup();
-      this.notificationService.success('Subject bol pridan do zoznamu');
-      this.onClose();
+      }, error: err => {
+        this.notificationService.warn(err.error.text)
+      },complete: () =>{
+        this.notificationService.success('Subject bol pridan do zoznamu');
+        this.onClose();
+      }});
+
     }
   }
 

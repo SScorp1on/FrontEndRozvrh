@@ -1,11 +1,12 @@
 <div class="form-container">
   <form [formGroup]="form" >
+    <mat-label><h1>Formular</h1></mat-label>
     <div class="row">
       <div class="col-md-12">
         <mat-form-field class="full-width">
           <mat-label id="firstName">Meno:</mat-label>
           <input formControlName="firstName" required matInput >
-          <button *ngIf="data.firstName" matSuffix mat-icon-button aria-label="Clear" (click)="data.firstName=('')" >
+          <button *ngIf="form.controls['firstName'].valid" matSuffix mat-icon-button aria-label="Clear" (click)="form.controls['firstName'].reset()" >
             <mat-icon>close</mat-icon>
           </button>
           <mat-error>
@@ -17,7 +18,7 @@
         <mat-form-field class="full-width">
           <mat-label id="lastName">Priezvisko:</mat-label>
           <input formControlName="lastName"  required matInput >
-          <button *ngIf="data.lastName" matSuffix mat-icon-button aria-label="Clear" (click)="data.lastName=('')" >
+          <button *ngIf="form.controls['lastName'].valid" matSuffix mat-icon-button aria-label="Clear" (click)="form.controls['lastName'].reset()" >
             <mat-icon>close</mat-icon>
           </button>
           <mat-error>
@@ -30,7 +31,7 @@
       <mat-form-field class="full-width">
         <mat-label id="contact">Contact:</mat-label>
         <input type="email"   placeholder="Priklad: pat@example.com" formControlName="contact" required matInput>
-        <button *ngIf="data.contact" matSuffix mat-icon-button aria-label="Clear" (click)="data.contact =('')" >
+        <button *ngIf="form.controls['contact'].value" matSuffix mat-icon-button aria-label="Clear" (click)="form.controls['contact'].reset()" >
           <mat-icon>close</mat-icon>
         </button>
         <mat-error>

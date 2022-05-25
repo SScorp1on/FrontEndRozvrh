@@ -33,7 +33,6 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   selectList1 = [{key: 'group', value:'Skupina'}, {key:'classroom', value:'Učebňa'}, {key: 'subject', value:'Predmet'}, {key: 'teacher', value:'Učiteľ'}]
- // timeList = ['7-30 - 8:10', '8:15 - 8:55', '9:05 - 9:45', '9:50 - 10:30']
   selectedList : TimeblockModel[] = []
   selectList2: any[] = []
   selectControl = new FormControl('group')
@@ -154,8 +153,6 @@ getObject(object: string){
     this.timeblocks = this.timeblocks.slice();
     this.service.getTimeblocks().pipe(takeUntil(this.destroy$)).subscribe((data: any) => {
       this.timeblocks = data
-    //  console.log(this.timeblocks)
-    //  console.log(this.sortedArray)
     })
     this.getObject(this.selectControl.value)
   }

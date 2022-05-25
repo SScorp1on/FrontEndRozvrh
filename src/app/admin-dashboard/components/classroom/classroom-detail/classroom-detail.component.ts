@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {NotificationService} from "../../services/notification.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -14,7 +14,6 @@ import {ClassroomService} from "../../services/classroom.service";
 export class ClassroomDetailComponent {
 
   classrooms: Classroom[] = []
-  value = ''
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -43,13 +42,16 @@ export class ClassroomDetailComponent {
 
   onSubmit() {
     console.log(this.data)
-    this.service.updateClassroom(this.data.id, this.form.value).subscribe(classroom => {
+    this.service.updateClassroom(this.data.id, this.form.value).subscribe({next: () => {
       this.classrooms.push(this.form.value)
-    });
-    this.form.reset();
-    this.initializeFormGroup();
-    this.notificationService.success('Ucebňa bola pridana do zoznamu');
-    this.onClose();
+    }, error: err => {
+    this.notificationService.warn(err.error.text)
+        console.log(err)
+    },complete: () => {
+        this.notificationService.success('Ucebňa bola pridana do zoznamu');
+        this.onClose();
+      }});
+
 
   }
 

@@ -21,14 +21,20 @@ export class GroupDeleteComponent {
 
   submitDelete(){
     console.log(this.data)
-    this.delete(this.data.id)
-    this.notificationService.success('Skupina bola odstranena do zoznamu');
-    this.dialogRef.close()
+    this.delete()
   }
   onNoClick(): void{
     this.dialogRef.close()
   }
-  delete(id: number): void {
-    this.service.deleteGroup(id).subscribe()
+  delete(): void {
+    this.service.deleteGroup(this.data.id).subscribe({next: ()=>{
+
+      }, error: err => {
+      this.notificationService.warn(err.error.text)
+        console.log(err)
+      }, complete: () => {
+        this.notificationService.success('Skupina bola odstranena do zoznamu');
+        this.dialogRef.close()
+      }})
   }
 }
