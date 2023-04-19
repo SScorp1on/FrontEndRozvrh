@@ -1,33 +1,24 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {HomeComponent} from "./home/home.component";
-import {PredmetStrankaComponent} from "./predmet/predmet-stranka/predmet-stranka.component";
-import {PredmetDetailComponent} from "./predmet/predmet-detail/predmet-detail.component";
-import {UcitelStrankaComponent} from "./ucitel/ucitel-stranka/ucitel-stranka.component";
-import {UcitelDetailComponent} from "./ucitel/ucitel-detail/ucitel-detail.component";
-import {PredmetFormularComponent} from "./predmet/predmet-formular/predmet-formular.component";
-import {UcitelFormularComponent} from "./ucitel/ucitel-formular/ucitel-formular.component";
-import {MiestnostZoznamComponent} from "./miestnost/miestnost-zoznam/miestnost-zoznam.component";
-import {MiestnostFormularComponent} from "./miestnost/miestnost-formular/miestnost-formular.component";
-import {MiestnostDetailComponent} from "./miestnost/miestnost-detail/miestnost-detail.component";
+import {TeacherListComponent} from "./admin-dashboard/components/teacher/teacher-list/teacher-list.component";
+import {ClassroomListComponent} from "./admin-dashboard/components/classroom/classroom-list/classroom-list.component";
+import {SubjectListComponent} from "./admin-dashboard/components/subject/subject-list/subject-list.component";
+import {AdminDashboardComponent} from "./admin-dashboard/admin-dashboard.component";
+import {GroupListComponent} from "./admin-dashboard/components/group/group-list/group-list.component";
+import {TimeblockListComponent} from "./admin-dashboard/components/timeblock/timeblock-list/timeblock-list.component";
+import {UserComponent} from "./user/user/user.component";
+
 
 
 const routes: Routes = [
-
-  {
-    path: '', redirectTo: '/home', pathMatch: 'full'
-  },
-    {path: 'home', component: HomeComponent},
-    {path: 'predmety', component: PredmetStrankaComponent},
-    {path: 'predmety-formular', component: PredmetFormularComponent},
-    {path: 'detail/predmety/:id', component: PredmetDetailComponent},
-    {path: 'teachers', component: UcitelStrankaComponent},
-    {path: 'teachers-formular', component: UcitelFormularComponent},
-    {path: 'detail/teachers/:id', component: UcitelDetailComponent},
-    {path: 'miestnosty', component: MiestnostZoznamComponent},
-    {path: 'miestnosty-formular', component: MiestnostFormularComponent},
-    {path: 'detail/miestnosty/:id', component: MiestnostDetailComponent},
-
+    {path: '', redirectTo: 'user', pathMatch: 'full'},
+    {path: 'admin-dashboard', component: AdminDashboardComponent},
+    {path: 'subjects', component: SubjectListComponent},
+    {path: 'teachers', component: TeacherListComponent},
+    {path: 'classrooms', component: ClassroomListComponent},
+    {path: 'groups', component: GroupListComponent},
+    {path: 'timeblock', component: TimeblockListComponent},
+    {path: 'user', component: UserComponent},
 ];
 
 @NgModule({

@@ -1,0 +1,427 @@
+<app-header></app-header>
+<div class="main-container">
+  <div class="col-1">
+    <mat-form-field>
+      <mat-select  (ngModelChange)="getObject(selectControl.value);" [formControl]="selectControl">
+        <mat-option *ngFor="let option of selectList1" [value]="option.key">{{option.value}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="selectControl.value == 'teacher'">
+      <mat-select (ngModelChange)="onSubmit()" [formControl]="objectControl" >
+        <mat-option *ngFor="let option of selectList2 " [value]="option.firstName + ' '+ option.lastName">{{option.firstName}} {{option.lastName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="selectControl.value == 'classroom'">
+      <mat-select (ngModelChange)="onSubmit()" [formControl]="objectControl">
+        <mat-option *ngFor="let option of selectList2 " [value]="option.name">{{option.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="selectControl.value == 'subject'">
+      <mat-select (ngModelChange)="onSubmit()" [formControl]="objectControl">
+        <mat-option *ngFor="let option of selectList2 " [value]="option.name">{{option.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="selectControl.value == 'group'">
+      <mat-select (ngModelChange)="onSubmit()" [formControl]="objectControl">
+        <mat-option *ngFor="let option of selectList2 " [value]="option.name">{{option.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+</div>
+<mat-button-toggle-group style="margin: 1rem" #group="matButtonToggleGroup">
+  <mat-button-toggle checked value="1" aria-label="Text align left">
+    Zobrazenie podľa dní
+  </mat-button-toggle>
+  <mat-button-toggle value="2" aria-label="Text align center">
+    Riadkove zobrazenie
+  </mat-button-toggle>
+</mat-button-toggle-group>
+<div *ngIf="filtered.length != 0; else elseBlock1">
+<div *ngIf="group.value == 1">
+<mat-tab-group>
+  <mat-tab *ngIf="f[0].length != 0" label="Pondelok">
+    <table>
+      <thead>
+      </thead>
+      <tbody>
+      <tr>
+        <td *ngFor="let element of f[0]">
+          <mat-card>
+            <mat-card-title>
+              {{element.start}} - {{element.finish}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Čas
+            </mat-card-subtitle>
+            <mat-card-title>
+              {{element.subject}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Predmet
+            </mat-card-subtitle>
+            <mat-card-title>
+              {{element.classroom}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Učebňa
+            </mat-card-subtitle>
+            <mat-card-title>
+              {{element.teacher}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Učitel
+            </mat-card-subtitle>
+          </mat-card>
+
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </mat-tab>
+  <mat-tab *ngIf="f[1].length != 0" label="Utorok">
+    <table >
+      <thead>
+      </thead>
+      <tbody>
+      <tr>
+        <td *ngFor="let element of f[1]">
+          <mat-card>
+            <mat-card-title>
+              {{element.start}} - {{element.finish}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Čas
+            </mat-card-subtitle>
+            <mat-card-title>
+              {{element.subject}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Predmet
+            </mat-card-subtitle>
+            <mat-card-title>
+              {{element.classroom}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Učebňa
+            </mat-card-subtitle>
+            <mat-card-title>
+              {{element.teacher}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Učitel
+            </mat-card-subtitle>
+          </mat-card>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </mat-tab>
+  <mat-tab *ngIf="f[2].length != 0" label="Streda">
+    <table>
+      <thead>
+      </thead>
+      <tbody>
+      <tr>
+        <td *ngFor="let element of f[2]">
+          <mat-card>
+            <mat-card-title>
+              {{element.start}} - {{element.finish}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Čas
+            </mat-card-subtitle>
+            <mat-card-title>
+              {{element.subject}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Predmet
+            </mat-card-subtitle>
+            <mat-card-title>
+              {{element.classroom}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Učebňa
+            </mat-card-subtitle>
+            <mat-card-title>
+              {{element.teacher}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Učitel
+            </mat-card-subtitle>
+          </mat-card>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </mat-tab>
+  <mat-tab *ngIf="f[3].length != 0" label="Štvrtok">
+    <table >
+      <thead>
+      </thead>
+      <tbody>
+      <tr>
+        <td *ngFor="let element of f[3]">
+          <mat-card>
+            <mat-card-title>
+              {{element.start}} - {{element.finish}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Čas
+            </mat-card-subtitle>
+            <mat-card-title>
+              {{element.subject}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Predmet
+            </mat-card-subtitle>
+            <mat-card-title>
+              {{element.classroom}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Učebňa
+            </mat-card-subtitle>
+            <mat-card-title>
+              {{element.teacher}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Učitel
+            </mat-card-subtitle>
+          </mat-card>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </mat-tab>
+  <mat-tab *ngIf="f[4].length != 0" label="Piatok">
+    <table >
+      <thead>
+
+      </thead>
+      <tbody>
+      <tr>
+        <td *ngFor="let element of f[4]">
+          <mat-card>
+            <mat-card-title>
+              {{element.start}} - {{element.finish}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Čas
+            </mat-card-subtitle>
+            <mat-card-title>
+              {{element.subject}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Predmet
+            </mat-card-subtitle>
+            <mat-card-title>
+              {{element.classroom}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Učebňa
+            </mat-card-subtitle>
+            <mat-card-title>
+              {{element.teacher}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              Učitel
+            </mat-card-subtitle>
+          </mat-card>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </mat-tab>
+</mat-tab-group>
+</div>
+<div *ngIf="group.value == 2">
+    <table>
+    <thead>
+    <tr>
+      <th>Deň</th>
+    </tr>
+    </thead>    <tbody>
+  <tr class="border-bottom" *ngIf="f['0'].length !=0 ">
+    <th >
+      Pondelok
+    </th>
+
+    <td *ngFor="let element of f[0]" >
+      <mat-card>
+        <mat-card-title>
+          {{element.start}} - {{element.finish}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Čas
+        </mat-card-subtitle>
+        <mat-card-title>
+          {{element.subject}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Predmet
+        </mat-card-subtitle>
+        <mat-card-title>
+          {{element.classroom}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Učebňa
+        </mat-card-subtitle>
+        <mat-card-title>
+          {{element.teacher}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Učitel
+        </mat-card-subtitle>
+      </mat-card>
+
+    </td>
+
+  </tr>
+  <tr class="border-bottom" *ngIf="f['1'].length !=0 ">
+    <th >
+      Utorok
+    </th>
+
+    <td *ngFor="let element of f[1]">
+      <mat-card>
+        <mat-card-title>
+          {{element.start}} - {{element.finish}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Čas
+        </mat-card-subtitle>
+        <mat-card-title>
+          {{element.subject}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Predmet
+        </mat-card-subtitle>
+        <mat-card-title>
+          {{element.classroom}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Učebňa
+        </mat-card-subtitle>
+        <mat-card-title>
+          {{element.teacher}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Učitel
+        </mat-card-subtitle>
+      </mat-card>
+
+    </td>
+
+  </tr>
+  <tr class="border-bottom" *ngIf="f['2'].length !=0 ">
+    <th >
+      Streda
+    </th>
+
+    <td *ngFor="let element of f['2']">
+      <mat-card>
+        <mat-card-title>
+          {{element.start}} - {{element.finish}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Čas
+        </mat-card-subtitle>
+        <mat-card-title>
+          {{element.subject}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Predmet
+        </mat-card-subtitle>
+        <mat-card-title>
+          {{element.classroom}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Učebňa
+        </mat-card-subtitle>
+        <mat-card-title>
+          {{element.teacher}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Učitel
+        </mat-card-subtitle>
+      </mat-card>
+
+    </td>
+
+  </tr>
+  <tr class="border-bottom" *ngIf="f['3'].length !=0 " >
+    <th >
+      Štvortok
+    </th>
+
+    <td *ngFor="let element of f['3']">
+      <mat-card>
+        <mat-card-title>
+          {{element.start}} - {{element.finish}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Čas
+        </mat-card-subtitle>
+        <mat-card-title>
+          {{element.subject}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Predmet
+        </mat-card-subtitle>
+        <mat-card-title>
+          {{element.classroom}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Učebňa
+        </mat-card-subtitle>
+        <mat-card-title>
+          {{element.teacher}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Učitel
+        </mat-card-subtitle>
+      </mat-card>
+
+    </td>
+
+  </tr>
+  <tr class="border-bottom" *ngIf="f['4'].length !=0 ">
+    <th >
+      Piatok
+    </th>
+
+    <td *ngFor="let element of f['4']">
+      <mat-card>
+        <mat-card-title>
+          {{element.start}} - {{element.finish}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Čas
+        </mat-card-subtitle>
+        <mat-card-title>
+          {{element.subject}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Predmet
+        </mat-card-subtitle>
+        <mat-card-title>
+          {{element.classroom}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Učebňa
+        </mat-card-subtitle>
+        <mat-card-title>
+          {{element.teacher}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          Učitel
+        </mat-card-subtitle>
+      </mat-card>
+    </td>
+  </tr>
+  </tbody>
+  </table>
+</div>
+
+</div>
+<ng-template #elseBlock1>Žiadny rozvrh pre tento filter</ng-template>

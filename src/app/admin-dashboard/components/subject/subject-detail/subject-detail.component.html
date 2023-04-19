@@ -1,0 +1,32 @@
+<div class="form-container">
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="full-width">
+          <mat-label>Nazov predmetu:</mat-label>
+          <input  formControlName="name"   matInput>
+          <button *ngIf="form.controls['name'].valid" matSuffix mat-icon-button aria-label="Clear" (click)="form.controls['name'].reset()" >
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-error>Pole nemôže byť prázdne</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-12">
+        <mat-form-field class="full-width">
+          <mat-select formControlName="type" placeholder="Typ predmetu" required>
+            <mat-option   *ngFor="let option of type" [value]="option.value" >{{option.value}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-slide-toggle formControlName="computersRequired" labelPosition="before" >Potrebuje Počitač </mat-slide-toggle>
+      <mat-card-actions class="flex-fill">
+        <button class="action-button" mat-stroked-button type="submit" [disabled]="form.invalid"  (click)="onSubmit()">
+          Pridať predmet
+        </button>
+        <button class="action-button"  mat-stroked-button (click)="onClose()">SPÄŤ</button>
+      </mat-card-actions>
+    </div>
+  </form>
+</div>
+

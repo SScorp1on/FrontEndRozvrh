@@ -1,42 +1,52 @@
-<!--<div class="example-container mat-elevation-z8">
-  <mat-table [dataSource]="dataSource" *ngFor="let table of tables">
-    <ng-container matColumnDef="position" [sticky]="isSticky(stickyColumns, 'position')">
-      <mat-header-cell *matHeaderCellDef> Position </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
-      <mat-footer-cell *matFooterCellDef> Position Footer </mat-footer-cell>
-    </ng-container>
+<!--
+<mat-tab-group dynamicHeight>
+  <mat-tab label="Pondelok">
+    <div class="example-large-box mat-elevation-z4">
 
-    <ng-container matColumnDef="name" [sticky]="isSticky(stickyColumns, 'name')">
-      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-      <mat-footer-cell *matFooterCellDef> Name Footer </mat-footer-cell>
-    </ng-container>
+    </div>
+  </mat-tab>
+  <mat-tab label="Utorok">
+    <div class="example-large-box mat-elevation-z4">
 
-    <ng-container matColumnDef="weight" [stickyEnd]="isSticky(stickyColumns, 'weight')">
-      <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
-      <mat-footer-cell *matFooterCellDef> Weight Footer </mat-footer-cell>
-    </ng-container>
+    </div>
+  </mat-tab>
+  <mat-tab label="Streda">
+    <div class="example-small-box mat-elevation-z4">
 
-    <ng-container matColumnDef="symbol" [stickyEnd]="isSticky(stickyColumns, 'symbol')">
-      <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
-      <mat-footer-cell *matFooterCellDef> Symbol Footer </mat-footer-cell>
-    </ng-container>
+    </div>
+  </mat-tab>
+  <mat-tab label="Stvortok">
+    <div class="example-small-box mat-elevation-z4">
+    </div>
+  </mat-tab>
+  <mat-tab label="Piatok">
+    <div class="example-small-box mat-elevation-z4">
 
-    <ng-container matColumnDef="filler">
-      <mat-header-cell *matHeaderCellDef> Filler header cell </mat-header-cell>
-      <mat-cell *matCellDef="let element"> Filler data cell </mat-cell>
-      <mat-footer-cell *matFooterCellDef> Filler footer cell </mat-footer-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: isSticky(stickyHeaders, 'header-1')"></mat-header-row>
-    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: isSticky(stickyHeaders, 'header-2')"></mat-header-row>
-
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-
-    <mat-footer-row *matFooterRowDef="displayedColumns; sticky: isSticky(stickyFooters, 'footer-1')"></mat-footer-row>
-    <mat-footer-row *matFooterRowDef="displayedColumns; sticky: isSticky(stickyFooters, 'footer-2')"></mat-footer-row>
-  </mat-table>
-</div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
 -->
+<table class="table border">
+  <thead>
+  <tr>
+    <th>Deň</th>
+    <th *ngFor="let element of timeblocks">{{element.start}}-{{element.finish}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="border" *ngFor="let element of timeblocks">
+      <th  [ngSwitch]="element.day">
+        <ng-container *ngSwitchCase="1">Pondelok</ng-container>
+        <ng-container *ngSwitchCase="2">Utorok</ng-container>
+        <ng-container *ngSwitchCase="3">Streda</ng-container>
+        <ng-container *ngSwitchCase="4">Štvortok</ng-container>
+        <ng-container *ngSwitchCase="5">Piatok</ng-container>
+      </th>
+    <td *ngFor="let element">
+      <ng-container></ng-container>
+
+    </td>
+
+  </tr>
+  </tbody>
+</table>

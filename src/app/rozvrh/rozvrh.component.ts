@@ -1,32 +1,28 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {TimeblockModel} from "../admin-dashboard/components/models/timeblock.model";
+import {TimeblockService} from "../admin-dashboard/components/services/timeblock.service";
+
+
 
 @Component({
   selector: 'app-rozvrh',
   templateUrl: './rozvrh.component.html',
   styleUrls: ['./rozvrh.component.css']
 })
-export class RozvrhComponent{
-  displayedColumns: string[] = [];
- // dataSource = ELEMENT_DATA;
+export class RozvrhComponent {
 
-  tables = [0];
+timeblocks: TimeblockModel[] = []
 
-  constructor() {
-    this.displayedColumns.length = 24;
-    this.displayedColumns.fill('filler');
-
-    // The first two columns should be position and name; the last two columns: weight, symbol
-    this.displayedColumns[0] = 'position';
-    this.displayedColumns[1] = 'name';
-    this.displayedColumns[22] = 'weight';
-    this.displayedColumns[23] = 'symbol';
+  constructor(private service: TimeblockService) {
+    this.timeblocks = this.timeblocks.slice();
+    this.service.getTimeblocks().subscribe(t => {
+      this.timeblocks = t
+      console.log(this.timeblocks)
+    })
   }
+  filteredDays(){
 
-  /** Whether the button toggle group contains the id as an active value. */
- /* isSticky(buttonToggleGroup: MatButtonToggleGroup, id: string) {
-    return (buttonToggleGroup.value || []).indexOf(id) !== -1;
-  }
 }
 
-*/
+
 }

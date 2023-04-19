@@ -1,0 +1,72 @@
+<app-header></app-header>
+
+<div class="button-container">
+  <button mat-raised-button class="button-action" (click)="onCreate()">
+    Pridanie predmetu
+  </button>
+  <button mat-raised-button backButton  class="button-action">
+    SPÄŤ
+  </button>
+</div>
+<mat-form-field style="margin-left: 10px" appearance="standard">
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)"  #input >
+</mat-form-field>
+<table mat-table [dataSource]="dataSourceSubjects"  matSort (matSortChange)="sortData($event)" class="mat-elevation-z8" >
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="id" > ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="name"> Nazov Predmetu </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <ng-container  matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="type" > Typ </th>
+    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="computersRequired">
+    <th mat-header-cell *matHeaderCellDef> Potrebuje počitač </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon *ngIf="element.computersRequired; else elseBlock" style="color: green" matTooltip="Potrebuje" matTooltipPosition="right">
+        computer
+        </mat-icon>
+      <ng-template #elseBlock>
+        <mat-icon  matTooltipPosition="right" matTooltip="Nepotrebuje" color="warn" >computer</mat-icon>
+      </ng-template>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="EDIT">
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let element">
+      <button matTooltip="Zmeniť" matTooltipPosition="right" color="primary" mat-button (click)="onEdit(element.id,element.name,element.type,element.computersRequired)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+  <ng-container  matColumnDef="DELETE">
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let element"> <button matTooltip="Odstrániť" color="warn" matTooltipPosition="right" mat-button (click)="onDelete(element.id)">
+      <mat-icon>delete</mat-icon>
+    </button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4">Žiadne údaje zodpovedajúce filtru "{{input.value}}"</td>
+  </tr>
+</table>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+<div *ngIf="isLoading"
+     style="display: flex; justify-content: center; align-items: center; background: white;">
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</div>
+

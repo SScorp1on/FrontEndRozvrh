@@ -1,23 +1,12 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from "@angular/platform-browser";
-import {PredmetDetailComponent} from "./predmet/predmet-detail/predmet-detail.component";
-import {PredmetFormularComponent} from "./predmet/predmet-formular/predmet-formular.component";
-import {DialogPredmetConfirmationComponent, PredmetZoznamComponent} from "./predmet/predmet-zoznam/predmet-zoznam.component";
-import {PredmetStrankaComponent} from "./predmet/predmet-stranka/predmet-stranka.component";
-import {UcitelFormularComponent} from "./ucitel/ucitel-formular/ucitel-formular.component";
-import {UcitelStrankaComponent} from "./ucitel/ucitel-stranka/ucitel-stranka.component";
-import {DialogUcitelConfirmationComponent, UcitelZoznamComponent} from "./ucitel/ucitel-zoznam/ucitel-zoznam.component";
-import {UcitelDetailComponent} from "./ucitel/ucitel-detail/ucitel-detail.component";
 import {HeaderComponent} from "./header/header.component";
-import {MessagesComponent} from "./messages/messages.component";
-import {HomeComponent} from "./home/home.component";
-import {HttpClientInMemoryWebApiModule} from "angular-in-memory-web-api";
-import {InMemoryDataPredmetyService} from "./in-memory-data-predmety.service";
+import {MessagesComponent} from "./admin-dashboard/components/messages/messages.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
@@ -37,35 +26,85 @@ import {MatCardModule} from "@angular/material/card";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import { FooterComponent } from './footer/footer.component';
 import { RozvrhComponent } from './rozvrh/rozvrh.component';
-import {DialogMiestnostConfirmationComponent, MiestnostZoznamComponent} from "./miestnost/miestnost-zoznam/miestnost-zoznam.component";
-import {MiestnostStrankaComponent} from "./miestnost/miestnost-stranka/miestnost-stranka.component";
-import {MiestnostFormularComponent} from "./miestnost/miestnost-formular/miestnost-formular.component";
 import {MatPaginatorModule} from "@angular/material/paginator";
-import {MiestnostDetailComponent} from "./miestnost/miestnost-detail/miestnost-detail.component";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { TeacherListComponent } from './admin-dashboard/components/teacher/teacher-list/teacher-list.component';
+import { TeacherAddComponent } from './admin-dashboard/components/teacher/teacher-add/teacher-add.component';
+import { TeacherDetailComponent } from './admin-dashboard/components/teacher/teacher-detail/teacher-detail.component';
+import { TeacherDeleteComponent } from './admin-dashboard/components/teacher/teacher-delete/teacher-delete.component';
+import { ClassroomListComponent } from './admin-dashboard/components/classroom/classroom-list/classroom-list.component';
+import { ClassroomAddComponent } from './admin-dashboard/components/classroom/classroom-add/classroom-add.component';
+import { ClassroomDetailComponent } from './admin-dashboard/components/classroom/classroom-detail/classroom-detail.component';
+import { ClassroomDeleteComponent } from './admin-dashboard/components/classroom/classroom-delete/classroom-delete.component';
+import {AdminDashboardComponent} from "./admin-dashboard/admin-dashboard.component";
+import {SubjectAddComponent} from "./admin-dashboard/components/subject/subject-add/subject-add.component";
+import {SubjectListComponent} from "./admin-dashboard/components/subject/subject-list/subject-list.component";
+import {SubjectDetailComponent} from "./admin-dashboard/components/subject/subject-detail/subject-detail.component";
+import {SubjectDeleteComponent} from "./admin-dashboard/components/subject/subject-delete/subject-delete.component";
+import {BackButtonDirective} from "./admin-dashboard/components/back-button.directive";
+import {MatMenuModule} from "@angular/material/menu";
+import { TimeblockListComponent } from './admin-dashboard/components/timeblock/timeblock-list/timeblock-list.component';
+import { TimeblockAddComponent } from './admin-dashboard/components/timeblock/timeblock-add/timeblock-add.component';
+import { TimeblockDetailComponent } from './admin-dashboard/components/timeblock/timeblock-detail/timeblock-detail.component';
+import { TimeblockDeleteComponent } from './admin-dashboard/components/timeblock/timeblock-delete/timeblock-delete.component';
+import { GroupListComponent } from './admin-dashboard/components/group/group-list/group-list.component';
+import { GroupDetailComponent } from './admin-dashboard/components/group/group-detail/group-detail.component';
+import { GroupDeleteComponent } from './admin-dashboard/components/group/group-delete/group-delete.component';
+import { GroupAddComponent } from './admin-dashboard/components/group/group-add/group-add.component';
+import {NullValidationHandler, OAuthModule, OAuthService} from "angular-oauth2-oidc";
+import {AuthInterceptor} from "./auth/authInterceptor";
+import {authCodeFlowConfig} from "./auth/AuthConfig";
+import {KeycloakAngularModule} from "keycloak-angular";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { UserComponent } from './user/user/user.component';
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatExpansionModule} from "@angular/material/expansion";
+function init_app(oauthService: OAuthService) {
+  return () => configureWithNewConfigApi(oauthService);
+}
+
+function configureWithNewConfigApi(oauthService: OAuthService) {
+  oauthService.configure(authCodeFlowConfig);
+  oauthService.tokenValidationHandler = new NullValidationHandler();
+  oauthService.setupAutomaticSilentRefresh();
+  oauthService.events.subscribe(e => { });
+  return oauthService.loadDiscoveryDocumentAndTryLogin();
+
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    PredmetDetailComponent,
-    PredmetFormularComponent,
-    PredmetZoznamComponent,
-    PredmetStrankaComponent,
-    UcitelFormularComponent,
-    UcitelStrankaComponent,
-    UcitelZoznamComponent,
-    UcitelDetailComponent,
     MessagesComponent,
-    HomeComponent,
     FooterComponent,
     RozvrhComponent,
-    MiestnostZoznamComponent,
-    MiestnostStrankaComponent,
-    MiestnostFormularComponent,
-    MiestnostDetailComponent,
-    DialogPredmetConfirmationComponent,
-    DialogUcitelConfirmationComponent,
-    DialogMiestnostConfirmationComponent
+    TeacherListComponent,
+    TeacherAddComponent,
+    TeacherDetailComponent,
+    TeacherDeleteComponent,
+    ClassroomListComponent,
+    ClassroomAddComponent,
+    ClassroomDetailComponent,
+    ClassroomDeleteComponent,
+    AdminDashboardComponent,
+    SubjectAddComponent,
+    SubjectListComponent,
+    SubjectDetailComponent,
+    SubjectDeleteComponent,
+    BackButtonDirective,
+    TimeblockListComponent,
+    TimeblockAddComponent,
+    TimeblockDetailComponent,
+    TimeblockDeleteComponent,
+    GroupListComponent,
+    GroupDetailComponent,
+    GroupDeleteComponent,
+    GroupAddComponent,
+    UserComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -74,12 +113,6 @@ import {MiestnostDetailComponent} from "./miestnost/miestnost-detail/miestnost-d
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-   // HttpClientInMemoryWebApiModule.forRoot(
-   //   InMemoryDataPredmetyService, {dataEncapsulation: false}
-    // ),
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -97,9 +130,30 @@ import {MiestnostDetailComponent} from "./miestnost/miestnost-detail/miestnost-d
     MatTooltipModule,
     MatCardModule,
     MatSlideToggleModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatButtonToggleModule,
+    MatTabsModule,
+    MatProgressBarModule,
+    MatMenuModule,
+    KeycloakAngularModule,
+    OAuthModule.forRoot(),
+    MatProgressSpinnerModule,
+    MatStepperModule,
+    MatExpansionModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: init_app,
+      multi: true,
+      deps: [OAuthService],
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
